@@ -18,14 +18,15 @@ public class Cofre {
     public Cofre(String descripcion) {
         this.descripcion = "Un cofre que parece estar cerrado por un candado dorado";
     }
-    void abrirCofre(){
+    public Lupa abrirCofre(){
         if(this.llave == null){
             System.out.println("No se ha insertado una llave");
         }else{
           if(cerradura == llave.abrir()){
-          return Lupa lupa
+          return lupa;
           }  
         }
+    return null;
     }
     public LLave getLlave() {
         return llave;
