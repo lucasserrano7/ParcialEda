@@ -9,16 +9,23 @@ package objetos;
  * @author Ema
  */
 public class LLave {
+    //atributos
     String descripcion;
     String nombre;
     
+    //constructor
+    public LLave() {
+        this.descripcion = " Una llave dorado que podria ser usada para abri una puerda, armario o otra ceradura";
+        this.nombre =  "LLave Dorada";
+    }
+    
+     //metodos
     public int abrir(){
         return 10;
     }
 
-    public LLave() {
-        this.descripcion = " Una llave dorado que podria ser usada para abri una puerda, armario o otra ceradura";
-        this.nombre =  "LLave Dorada";
+    public LLave agarrarLLave(){
+        return this;
     }
     
     

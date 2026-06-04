@@ -7,11 +7,21 @@ package objetos;
 
 
 public class Lupa {
+    //atributos
+    private String nombre ;
+    private String descripcion; 
     
-    private String nombre = "Lupa Usada";
-    private String descripcion = "Una lupa muy usada, puede ser muy util";
+    //constructor
+    public Lupa() {
+        this.nombre = "Lupa Usada";
+        this.descripcion = "Una lupa muy usada, puede ser muy util";
+    }
     
-
+    //metodos
+    public Lupa agarrarLupa(){
+        return this;
+    }
+    
     public static String usarLupa(){
         return "Miras atentamente con la lupa... Que es eso? un fosforo quizas nos sirva para escapar";
     }

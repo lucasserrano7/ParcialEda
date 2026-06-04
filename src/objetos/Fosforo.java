@@ -9,8 +9,20 @@ package objetos;
  * @author user
  */
 public class Fosforo {
-    private String nombre = "Fosforo";
-    private String descripcion = "Un fosforo sin usar, nos podra alumbrar el camino a la salida?";
+    //atributos
+    private String nombre;
+    private String descripcion;
+
+    //constructor
+    public Fosforo() {
+        this.nombre = "Fosforo";
+        this.descripcion = "Un fosforo sin usar, nos podra alumbrar el camino a la salida?";
+    }
+    
+    //metodos
+    public Fosforo agarrarFosforo(){
+        return this;
+    }
     
     public static String usarFosforo(){
         return "Encendes el fosforo descubriste un camino a una sala nueva... Que habra ahi?";
