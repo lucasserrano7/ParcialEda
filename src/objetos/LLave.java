@@ -10,6 +10,7 @@ package objetos;
  */
 public class LLave {
     String descripcion;
+    String nombre;
     
     public int abrir(){
         return 10;
@@ -17,6 +18,7 @@ public class LLave {
 
     public LLave() {
         this.descripcion = " Una llave dorado que podria ser usada para abri una puerda, armario o otra ceradura";
+        this.nombre =  "LLave Dorada";
     }
     
     

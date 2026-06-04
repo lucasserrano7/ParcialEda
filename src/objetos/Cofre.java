@@ -10,6 +10,7 @@ package objetos;
  * @author Ema
  */
 public class Cofre {
+    String nombre;
     String descripcion;
     LLave llave;
     int cerradura = 10;
@@ -17,6 +18,7 @@ public class Cofre {
 
     public Cofre(String descripcion) {
         this.descripcion = "Un cofre que parece estar cerrado por un candado dorado";
+        this.nombre = "cofre Dorado";
     }
     public Lupa abrirCofre(){
         if(this.llave == null){
