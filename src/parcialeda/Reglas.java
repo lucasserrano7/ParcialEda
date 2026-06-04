@@ -6,8 +6,14 @@ package parcialeda;
 
 /**
  *
- * @author Ema
+ * @author user
  */
+
+public class Reglas {
+    public static void reglas(){
+        System.out.println("Reglas del juego: ");
+    } 
+
 public class Nodo {
     Sala sala;
     
