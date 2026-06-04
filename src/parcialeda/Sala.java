@@ -6,8 +6,54 @@ package parcialeda;
 
 /**
  *
- * @author user
+ * @author lucas
  */
 public class Sala {
     
+    private int numeroSala;
+    private String descripcionSala;
+    private boolean salida;
+
+    public Sala(int numeroSala, String descripcionSala, boolean salida) {
+        this.numeroSala = numeroSala;
+        this.descripcionSala = descripcionSala;
+        this.salida = salida;
+    }
+    
+    // Getters y Setters
+
+    public int getNumeroSala() {
+        return numeroSala;
+    }
+
+    public void setNumeroSala(int numeroSala) {
+        this.numeroSala = numeroSala;
+    }
+
+    public String getDescripcionSala() {
+        return descripcionSala;
+    }
+
+    public void setDescripcionSala(String descripcionSala) {
+        this.descripcionSala = descripcionSala;
+    }
+
+    public boolean isSalida() {
+        return salida;
+    }
+
+    public void setSalida(boolean salida) {
+        this.salida = salida;
+    }
+    
+    public void agregarConexion(){
+        
+    }
+    public void obtenerSiguente(){
+        
+    }
+    
+    
+}
+
 }
