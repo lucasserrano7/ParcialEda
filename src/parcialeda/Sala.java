@@ -13,7 +13,9 @@ public class Sala {
     private int numeroSala;
     private String descripcionSala;
     private boolean salida;
+    
 
+// constructor
     public Sala(int numeroSala, String descripcionSala, boolean salida) {
         this.numeroSala = numeroSala;
         this.descripcionSala = descripcionSala;
@@ -46,12 +48,12 @@ public class Sala {
         this.salida = salida;
     }
     
-    public void agregarConexion(){
-        
-    }
-    public void obtenerSiguente(){
-        
-    }
+//    public void agregarConexion(){
+//        
+//    }
+//    public void obtenerSiguente(){
+//        
+//    }
     
     
 }
