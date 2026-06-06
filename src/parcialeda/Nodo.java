@@ -9,7 +9,7 @@ public class Nodo {
     public Nodo(Sala sala, Nodo siguiente1) {
         this.sala = sala;
         // se crea un nodo de tamaño uno
-        this.siguiente = new Nodo[1];
+        this.siguiente = new Nodo[0];
         this.siguiente[0] = siguiente1;
     }
     

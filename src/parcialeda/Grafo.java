@@ -27,26 +27,35 @@ public class Grafo {
         return nodos;
     }
 
+    
+    
     public void mostrarGrafo() {
 
-        for (Nodo nodo : nodos) {
+    for (Nodo nodo : nodos) {
 
-            System.out.println("Sala "
-                    + nodo.getSala().getNumeroSala());
+        System.out.println(
+            "Sala "
+            + nodo.getSala().getNumeroSala()
+            + " - "
+            + nodo.getSala().getDescripcionSala()
+        );
 
-            for (Nodo sig : nodo.getSiguiente()) {
+        for (Nodo sig : nodo.getSiguiente()) {
 
-                if (sig != null) {
+            if (sig != null) {
 
-                    System.out.println(
-                        " Sala "
-                        + sig.getSala().getNumeroSala()
-                    );
-                }
+                System.out.println(
+                    " -> Sala "
+                    + sig.getSala().getNumeroSala()
+                    + " - "
+                    + sig.getSala().getDescripcionSala()
+                );
+
             }
-
-            System.out.println();
         }
+
+        System.out.println();
+    }
     }
 }
 

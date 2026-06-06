@@ -15,6 +15,7 @@ public class ParcialEda {
      */
     public static void main(String[] args) {
         Reglas.reglas();
+        Grafo grafo = new Grafo();
        
         Sala inicio = new Sala(0,"Hall de entrada",false);
 
@@ -62,7 +63,6 @@ nSala4.setSiguiente(
     new Nodo[]{nSala3,nSala2, nCentral}
 );
 
-Grafo grafo = new Grafo();
 
 grafo.agregarNodo(nInicio);
 grafo.agregarNodo(nSala1);
@@ -70,6 +70,8 @@ grafo.agregarNodo(nSala2);
 grafo.agregarNodo(nCentral);
 grafo.agregarNodo(nSala3);
 grafo.agregarNodo(nSala4);
+
+grafo.mostrarGrafo();
 
 }
 }
