@@ -110,30 +110,42 @@ grafo.mostrarGrafo();
         }
         nActual.opcionesDeAvanzar();
         
-        if (nActual.getSala().getNumeroSala() == 2 && inv) {
-            
-        }
 }
  
     public static void usarObjeto(Nodo nActual){
+    //SALA 1
     if (nActual.getSala().getNumeroSala() == 1) {
-    
+    System.out.println("");
     Fosforo fosforo = (Fosforo) nActual.getSala().getObjeto();
     fosforo.usarFosforo();
     }
-   
-    if (nActual.getSala().getNumeroSala() == 2) {
     
+    //SALA 2
+    if (nActual.getSala().getNumeroSala() == 2) {
     Cofre miCofre = (Cofre) nActual.getSala().getObjeto();
     miCofre.abrirCofre();
     }
     
+    //SALA 4
     if (nActual.getSala().getNumeroSala() == 4) {
-    
     LLave llave = (LLave) nActual.getSala().getObjeto();
     llave.agarrarLLave();
     }
-    
+    //----RESTO----
+    //SALA 0
+    if (nActual.getSala().getNumeroSala() == 0) {
     }
+    //SALA 3
+    if (nActual.getSala().getNumeroSala() == 3) {
+    }
+    //SALA 5
+    if (nActual.getSala().getNumeroSala() == 5) {
+    }
+    //SALA 6
+    if (nActual.getSala().getNumeroSala() == 6) {
+    }
+    //FIN
+    }
+    
     
 }
