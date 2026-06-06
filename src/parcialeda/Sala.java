@@ -50,6 +50,14 @@ public class Sala {
         this.salida = salida;
     }
 
+    public Object getObjeto() {
+        return objeto;
+    }
+
+    public void setObjeto(Object objeto) {
+        this.objeto = objeto;
+    }
+    
     
 }
 
