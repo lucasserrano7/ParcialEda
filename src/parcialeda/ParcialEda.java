@@ -102,6 +102,11 @@ grafo.mostrarGrafo();
             System.out.println("Tu puntaje: " + puntosTotales);
             nActual.opcionesDeAvanzar();
             
+            usarObjeto(nActual);
+            
+            if(nActual.getSala().isSalida()){
+                System.out.println("Ganaste");
+            }
         }
         nActual.opcionesDeAvanzar();
         
@@ -110,4 +115,25 @@ grafo.mostrarGrafo();
         }
 }
  
+    public static void usarObjeto(Nodo nActual){
+    if (nActual.getSala().getNumeroSala() == 1) {
+    
+    Fosforo fosforo = (Fosforo) nActual.getSala().getObjeto();
+    fosforo.usarFosforo();
+    }
+   
+    if (nActual.getSala().getNumeroSala() == 2) {
+    
+    Cofre miCofre = (Cofre) nActual.getSala().getObjeto();
+    miCofre.abrirCofre();
+    }
+    
+    if (nActual.getSala().getNumeroSala() == 4) {
+    
+    LLave llave = (LLave) nActual.getSala().getObjeto();
+    llave.agarrarLLave();
+    }
+    
+    }
+    
 }
