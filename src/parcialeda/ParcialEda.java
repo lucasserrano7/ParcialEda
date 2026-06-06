@@ -15,6 +15,7 @@ public class ParcialEda {
      */
     public static void main(String[] args) {
         Reglas.reglas();
+       
     }
     
 }

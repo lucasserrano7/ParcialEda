@@ -1,3 +1,5 @@
+package parcialeda;
+
 import parcialeda.Sala;
 
 public class Nodo {
