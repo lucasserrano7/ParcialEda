@@ -85,8 +85,9 @@ grafo.mostrarGrafo();
         
         while (nActual != null) {            
             System.out.println("Ubicacion Actual" + nActual.getSala().getNumeroSala());
+            System.out.println("Descripcion sala Actual" + nActual.getSala().getDescripcionSala());
             System.out.println("Tu puntaje: " + puntosTotales);
-            
+            nActual.opcionesDeAvanzar();
             
         }
         nActual.opcionesDeAvanzar();

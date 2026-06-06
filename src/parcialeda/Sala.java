@@ -13,13 +13,15 @@ public class Sala {
     private int numeroSala;
     private String descripcionSala;
     private boolean salida;
+    private Object objeto;
     
 
 // constructor
-    public Sala(int numeroSala, String descripcionSala, boolean salida) {
+    public Sala(int numeroSala, String descripcionSala, boolean salida,Object objeto) {
         this.numeroSala = numeroSala;
         this.descripcionSala = descripcionSala;
         this.salida = salida;
+        this.objeto = objeto;
     }
     
     // Getters y Setters
