@@ -12,6 +12,11 @@ public class Nodo {
         this.siguiente = new Nodo[1];
         this.siguiente[0] = siguiente1;
     }
+    
+    public Nodo(Sala sala) {
+    this.sala = sala;
+    this.siguiente = new Nodo[0];
+}
 
    
     public Nodo(Sala sala, Nodo siguiente1, Nodo siguiente2) {

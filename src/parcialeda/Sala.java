@@ -47,14 +47,7 @@ public class Sala {
     public void setSalida(boolean salida) {
         this.salida = salida;
     }
-    
-//    public void agregarConexion(){
-//        
-//    }
-//    public void obtenerSiguente(){
-//        
-//    }
-    
+
     
 }
 
