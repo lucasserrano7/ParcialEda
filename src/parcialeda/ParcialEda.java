@@ -5,6 +5,11 @@
 package parcialeda;
 
 import java.util.Scanner;
+import objetos.Cofre;
+import objetos.Escalera;
+import objetos.Fosforo;
+import objetos.LLave;
+import objetos.Lupa;
 
 /**
  *
@@ -19,17 +24,20 @@ public class ParcialEda {
         Reglas.reglas();
         Grafo grafo = new Grafo();
        
-        Sala inicio = new Sala(0,"Hall de entrada",false);
-
-        Sala sala1 = new Sala(1,"Biblioteca",false);
-
-        Sala sala2 = new Sala(2,"Cuarto de investigaciones",false);
-
-        Sala salaCentral = new Sala(3,"Pasadizo secreto",false);
-
-        Sala sala3 = new Sala(4,"Torre oscura",true); // es la salida, por eso esta en true
-
-        Sala sala4 = new Sala(5,"Laboratorio",false);
+        Cofre cofre = new Cofre();
+        Escalera escalera = new Escalera();
+        Fosforo fosforo = new Fosforo();
+        LLave llave = new LLave();
+        Lupa lupa = new Lupa();
+        
+        
+        Sala inicio = new Sala(0,"Hall de entrada",false,null);
+        Sala sala1 = new Sala(1,"Biblioteca",false,fosforo);
+        Sala sala2 = new Sala(2,"Cuarto de investigaciones",false,cofre);
+        Sala salaCentral = new Sala(3,"Pasadizo secreto",false,escalera);
+        Sala sala4 = new Sala(4,"Torre oscura",false,llave);
+        Sala sala5 = new Sala(5,"Laboratorio",false,null);
+        Sala sala6Escape = new Sala(6,"Laboratorio",true,null);
         
    
     
@@ -37,32 +45,36 @@ public class ParcialEda {
     Nodo nSala1 = new Nodo(sala1);
     Nodo nSala2 = new Nodo(sala2);
     Nodo nCentral = new Nodo(salaCentral);
-    Nodo nSala3 = new Nodo(sala3);
     Nodo nSala4 = new Nodo(sala4);
+    Nodo nSala5 = new Nodo(sala5);
+    Nodo nSala6 = new Nodo(sala6Escape);
     
-    
-    nInicio.setSiguiente(
+ nInicio.setSiguiente(
     new Nodo[]{nSala1, nSala2}
 );
 
 nSala1.setSiguiente(
-    new Nodo[]{nSala2, nSala3}
+    new Nodo[]{nSala2, nSala4}
 );
 
 nSala2.setSiguiente(
-    new Nodo[]{nSala1, nSala4}
+    new Nodo[]{nSala1, nSala5}
 );
 
 nCentral.setSiguiente(
-    new Nodo[]{nSala1, nSala2, nSala3, nSala4}
-);
-
-nSala3.setSiguiente(
-    new Nodo[]{nSala4}
+    new Nodo[]{nSala1, nSala2, nSala4, nSala5}
 );
 
 nSala4.setSiguiente(
-    new Nodo[]{nSala3,nSala2, nCentral}
+    new Nodo[]{nSala1,nSala5,nSala6}
+);
+
+nSala5.setSiguiente(
+    new Nodo[]{nSala2,nCentral, nSala4}
+);
+
+nSala6.setSiguiente(
+    new Nodo[]{nSala4}
 );
 
 
@@ -70,8 +82,9 @@ grafo.agregarNodo(nInicio);
 grafo.agregarNodo(nSala1);
 grafo.agregarNodo(nSala2);
 grafo.agregarNodo(nCentral);
-grafo.agregarNodo(nSala3);
 grafo.agregarNodo(nSala4);
+grafo.agregarNodo(nSala5);
+grafo.agregarNodo(nSala6);
 
 grafo.mostrarGrafo();
    
