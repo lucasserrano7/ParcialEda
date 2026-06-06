@@ -4,6 +4,8 @@
  */
 package parcialeda;
 
+import java.util.Scanner;
+
 /**
  *
  * @author user
@@ -72,6 +74,26 @@ grafo.agregarNodo(nSala3);
 grafo.agregarNodo(nSala4);
 
 grafo.mostrarGrafo();
-
+   
+        Scanner scanner =  new Scanner(System.in);
+        Nodo nActual = nInicio;
+        Nodo nAnterios = null;
+        int puntosTotales = 0;
+        boolean yaVolvioAtras = false;
+        System.out.println("-------------------");
+        System.out.println("Comienza el juegoo..");
+        
+        while (nActual != null) {            
+            System.out.println("Ubicacion Actual" + nActual.getSala().getNumeroSala());
+            System.out.println("Tu puntaje: " + puntosTotales);
+            
+            
+        }
+        nActual.opcionesDeAvanzar();
+        
+        if (nActual.getSala().getNumeroSala() == 2 && inv) {
+            
+        }
 }
+ 
 }
