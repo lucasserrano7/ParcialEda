@@ -37,8 +37,28 @@ public class Grafo {
 
     public void mostrarGrafo() {
 
-   // me falta armar un for
+ 
 
+        System.out.println("CONEXIONES");
+
+        for (int i = 0; i < matriz.length; i++) {
+
+            System.out.print("Sala " + i + " -> ");
+
+            for (int j = 0; j < matriz[i].length; j++) {
+
+                if (matriz[i][j] == 1) {
+                    System.out.print(j + " ");
+                }
+
+            }
+
+            System.out.println();
+        }
+    }
+
+    public ArrayList<Sala> getSalas() {
+        return salas;
    
 }
 }
