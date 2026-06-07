@@ -60,7 +60,11 @@ public class Nodo {
             System.out.println("No hay salas disponibles para avanzar (¡Llegaste al final!).");
         }
     }
-
+        
+    public void avanzar(){
+    
+    }
+    
     // Getters y Setters
     public Sala getSala() {
         return sala;

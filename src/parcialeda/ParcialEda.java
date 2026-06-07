@@ -32,8 +32,8 @@ public class ParcialEda {
         
         
         Sala inicio = new Sala(0,"Hall de entrada",false,null);
-        Sala sala1 = new Sala(1,"Biblioteca",false,fosforo);
-        Sala sala2 = new Sala(2,"Cuarto de investigaciones",false,cofre);
+        Sala sala1 = new Sala(1,"Comedor",false,fosforo);
+        Sala sala2 = new Sala(2,"Sotano de investigaciones",false,cofre);
         Sala salaCentral = new Sala(3,"Pasadizo secreto",false,escalera);
         Sala sala4 = new Sala(4,"Torre oscura",false,llave);
         Sala sala5 = new Sala(5,"Laboratorio",false,null);
@@ -97,22 +97,52 @@ grafo.mostrarGrafo();
         System.out.println("Comienza el juegoo..");
         
         while (nActual != null) {            
-            System.out.println("Ubicacion Actual" + nActual.getSala().getNumeroSala());
+            System.out.println("Ubicacion Actual: " + nActual.getSala().getNumeroSala());
             System.out.println("Descripcion sala Actual" + nActual.getSala().getDescripcionSala());
             System.out.println("Tu puntaje: " + puntosTotales);
-            nActual.opcionesDeAvanzar();
-            
-            usarObjeto(nActual);
-            
-            if(nActual.getSala().isSalida()){
-                System.out.println("Ganaste");
+            boolean t = true;
+            while(t){
+                System.out.println("Opciones para este cuarto\n");
+                mostrarOpciones(nActual);
             }
+            
+            
         }
-        nActual.opcionesDeAvanzar();
         
 }
- 
-    public static void usarObjeto(Nodo nActual){
+    public static void mostrarOpciones(Nodo nActual){
+        Scanner scanner = new Scanner(System.in);
+        boolean t = true;
+        int num = 0;
+        while(t){
+        System.out.println("1: avanzar");
+        System.out.println("2: analisar sala");
+        
+        
+        num = scanner.nextInt();
+        if(num>0 && num< 5){t = false;}
+        }
+            switch (num) {
+        case 1:
+            System.out.println("Cuartos Para Avanzar"); 
+            nActual.opcionesDeAvanzar();
+            break;
+        case 2:
+            System.out.println("Analizando sala");
+            analizarSala(nActual);
+            break;
+        case 3:
+            nombreDia = "Miércoles";
+            break;
+        default:
+            nombreDia = "Día desconocido";
+            break;
+        }
+        
+    }
+    
+    
+    public static void analizarSala(Nodo nActual){
     //SALA 1
     if (nActual.getSala().getNumeroSala() == 1) {
     System.out.println("");
@@ -134,15 +164,19 @@ grafo.mostrarGrafo();
     //----RESTO----
     //SALA 0
     if (nActual.getSala().getNumeroSala() == 0) {
+        System.out.println("No veo nada especial en este cuarto");
     }
     //SALA 3
     if (nActual.getSala().getNumeroSala() == 3) {
+        System.out.println("No veo nada especial en este cuarto");
     }
     //SALA 5
     if (nActual.getSala().getNumeroSala() == 5) {
+        System.out.println("No veo nada especial en este cuarto");
     }
     //SALA 6
     if (nActual.getSala().getNumeroSala() == 6) {
+        System.out.println("No veo nada especial en este cuarto");
     }
     //FIN
     }
