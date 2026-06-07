@@ -14,6 +14,15 @@ public class Sala {
     private String descripcionSala;
     private boolean salida;
     private Object objeto;
+    boolean analizada = false;
+
+    public boolean isAnalizada() {
+        return analizada;
+    }
+
+    public void setAnalizada(boolean analizada) {
+        this.analizada = analizada;
+    }
     
 
 // constructor

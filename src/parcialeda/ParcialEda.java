@@ -30,6 +30,8 @@ public class ParcialEda {
         LLave llave = new LLave();
         Lupa lupa = new Lupa();
         
+        //JUGADOR
+        Jugador jugador = new Jugador();
         
         Sala inicio = new Sala(0,"Hall de entrada",false,null);
         Sala sala1 = new Sala(1,"Comedor",false,fosforo);
@@ -103,40 +105,47 @@ grafo.mostrarGrafo();
             boolean t = true;
             while(t){
                 System.out.println("Opciones para este cuarto\n");
-                mostrarOpciones(nActual);
+                mostrarOpciones(nActual,jugador);
             }
             
             
         }
         
 }
-    public static void mostrarOpciones(Nodo nActual){
+    public static void mostrarOpciones(Nodo nActual,Jugador jugador){
+         
         Scanner scanner = new Scanner(System.in);
         boolean t = true;
         int num = 0;
         while(t){
         System.out.println("1: avanzar");
-        System.out.println("2: analisar sala");
-        
+        System.out.println("2: analizar sala");
+        if(nActual.getSala().isAnalizada()){
+        System.out.println("3: agarrar objeto");
+        }
         
         num = scanner.nextInt();
         if(num>0 && num< 5){t = false;}
         }
             switch (num) {
         case 1:
+            //avanzar
             System.out.println("Cuartos Para Avanzar"); 
             nActual.opcionesDeAvanzar();
+            System.out.println("Selecione un cuarto a avanzar(o no hacer nada 0)");
+            int avanzar = scanner.nextInt();
+            nActual = nActual.avanzar(avanzar);
             break;
         case 2:
+            //analizar sala
             System.out.println("Analizando sala");
             analizarSala(nActual);
             break;
         case 3:
-            nombreDia = "Miércoles";
-            break;
-        default:
-            nombreDia = "Día desconocido";
-            break;
+            //agarrar objeto
+            System.out.println("Agarrar el objeto de esta sala");
+            agarrarObjeto(nActual,jugador);
+            
         }
         
     }
@@ -145,41 +154,66 @@ grafo.mostrarGrafo();
     public static void analizarSala(Nodo nActual){
     //SALA 1
     if (nActual.getSala().getNumeroSala() == 1) {
-    System.out.println("");
-    Fosforo fosforo = (Fosforo) nActual.getSala().getObjeto();
-    fosforo.usarFosforo();
+    System.out.println("Aqui hay muchas cosas, cigarillos, polillas, nesesiaria algo para ver mas de cerca entre tantas cosas,\n no voy a meter mano sin poder ver bien");
+    nActual.getSala().setAnalizada(true);
     }
     
     //SALA 2
     if (nActual.getSala().getNumeroSala() == 2) {
     Cofre miCofre = (Cofre) nActual.getSala().getObjeto();
-    miCofre.abrirCofre();
+    nActual.getSala().setAnalizada(true);
     }
     
     //SALA 4
     if (nActual.getSala().getNumeroSala() == 4) {
-    LLave llave = (LLave) nActual.getSala().getObjeto();
-    llave.agarrarLLave();
+    System.out.println("esta habitacion esta llena de cosas fascinantes, planetas de telgopor, pinturas, microscopios y una lupa en excelentes condicioens");
+    nActual.getSala().setAnalizada(true);
+    }
+    
+    //SALA 5
+    if (nActual.getSala().getNumeroSala() == 5) {
+        System.out.println("No logro ver bien en esta sala, nesesito un poco de luz para ver");
+        nActual.getSala().setAnalizada(true);
     }
     //----RESTO----
     //SALA 0
     if (nActual.getSala().getNumeroSala() == 0) {
         System.out.println("No veo nada especial en este cuarto");
+        nActual.getSala().setAnalizada(true);
     }
     //SALA 3
     if (nActual.getSala().getNumeroSala() == 3) {
         System.out.println("No veo nada especial en este cuarto");
+        nActual.getSala().setAnalizada(true);
     }
-    //SALA 5
-    if (nActual.getSala().getNumeroSala() == 5) {
-        System.out.println("No veo nada especial en este cuarto");
-    }
+    
     //SALA 6
     if (nActual.getSala().getNumeroSala() == 6) {
         System.out.println("No veo nada especial en este cuarto");
+        nActual.getSala().setAnalizada(true);
     }
     //FIN
     }
+    public static void agarrarObjeto(Nodo nActual , Jugador jugador){
+    if (nActual.getSala().getNumeroSala() == 1){
+        Fosforo fosforo = (Fosforo) nActual.getSala().getObjeto();
+        jugador.setFosforo(fosforo.agarrarFosforo());
+    }
+    if (nActual.getSala().getNumeroSala() == 2){
+        Fosforo fosforo = (Fosforo) nActual.getSala().getObjeto();
+        jugador.setFosforo(fosforo.agarrarFosforo());
+    }
+    if (nActual.getSala().getNumeroSala() == 3){
+        Fosforo fosforo = (Fosforo) nActual.getSala().getObjeto();
+        jugador.setFosforo(fosforo.agarrarFosforo());
+    }
+    if (nActual.getSala().getNumeroSala() == 4){
+        Fosforo fosforo = (Fosforo) nActual.getSala().getObjeto();
+        jugador.setFosforo(fosforo.agarrarFosforo());
+    }
     
     
+    
+    
+    }
 }

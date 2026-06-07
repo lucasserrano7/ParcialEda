@@ -61,8 +61,31 @@ public class Nodo {
         }
     }
         
-    public void avanzar(){
-    
+    public Nodo avanzar(int num){
+        switch (num) {
+            case 0:
+                System.out.println("Saliendo de avanzar");
+                return null;
+            case 1:
+                if(this.siguiente[0] != null){
+                return this.siguiente[0];
+                }else{
+                return null;
+                }
+            case 2:
+                if(this.siguiente[1] != null){
+                return this.siguiente[1];
+                }else{
+                return null;
+                }
+            case 3:
+                if(this.siguiente[2] != null){
+                return this.siguiente[2];
+                }else{
+                return null;
+                }
+        }
+    return null;
     }
     
     // Getters y Setters
