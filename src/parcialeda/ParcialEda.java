@@ -109,7 +109,7 @@ public class ParcialEda {
                 } else {
 
                     System.out.println("La salida esta demasiado alta.");
-                    System.out.println("Necesitas una escalera para escapar.");
+                    System.out.println("nesesito una forma de llegar hasta alla arriba.");
                 }
             }
 
@@ -204,7 +204,7 @@ public class ParcialEda {
 
         //SALA 2
         if (nActual.getSala().getNumeroSala() == 2) {
-            Cofre miCofre = (Cofre) nActual.getSala().getObjeto();
+            System.out.println("Aqui hay muchos tesoros, un cofre dorado por ahi, es muy brillante");
             nActual.getSala().setAnalizada(true);
         }
 
@@ -260,7 +260,7 @@ public class ParcialEda {
             if (jugador.getLlave() == null) {
 
                 System.out.println(
-                        "El cofre esta cerrado. Necesitas una llave."
+                        "El cofre esta cerrado.."
                 );
 
             } else {
@@ -280,7 +280,7 @@ public class ParcialEda {
             if (jugador.getLupa() == null) {
 
                 System.out.println(
-                        "Necesitas una lupa para buscar entre tantas cosas."
+                        "Necesitas algo para ver de cerca."
                 );
 
             } else {
