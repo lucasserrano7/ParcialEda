@@ -243,7 +243,6 @@ public class ParcialEda {
                 jugador.getFosforo().usarFosforo();
                 System.out.println(AZUL_OSCURO + "🔍 detras de un gran cuadro veo un camino para para ir a una sala oculta detras de una maquina del laboratorio" + RESET);
                 
-                // CORREGIDO: Reemplaza el null del array por el camino real hacia la sala central (Pasadizo)
                 sala5.setSiguiente(new Nodo[]{sala5.getSiguiente()[0], sala5.getSiguiente()[1], nCentral});
                 
                 nActual.getSala().setAnalizada(true);
@@ -268,7 +267,6 @@ public class ParcialEda {
     }
 
     public static void agarrarObjeto(Nodo nActual, Jugador jugador) {
-        // Código ANSI para verde oscuro y reset
         String VERDE_OSCURO = "\u001B[32m";
         String RESET = "\u001B[0m";
 
