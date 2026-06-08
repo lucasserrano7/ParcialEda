@@ -40,7 +40,7 @@ public class Jugador {
     }
 
     public void setPuntaje(int puntaje) {
-        this.puntaje = puntaje;
+        this.puntaje += puntaje;
     }
 
 

@@ -71,7 +71,7 @@ public class ParcialEda {
         );
 
         nSala5.setSiguiente(
-                new Nodo[]{nSala2, nCentral, nSala4}
+                new Nodo[]{nSala2,nSala4,null}
         );
 
         nSala6.setSiguiente(
@@ -135,6 +135,9 @@ public class ParcialEda {
         boolean t = true;
         int num = 0;
         while (t) {
+            
+            try {
+                
             System.out.println("1: avanzar");
             System.out.println("2: analizar sala");
             if (nActual.getSala().isAnalizada()
@@ -147,7 +150,11 @@ public class ParcialEda {
             num = scanner.nextInt();
             if (num > 0 && num < 5) {
                 t = false;
+            }    
+                
+            } catch (Exception e) {
             }
+            
         }
         switch (num) {
             case 1:
@@ -171,7 +178,7 @@ public class ParcialEda {
             case 2:
                 //analizar sala
                 System.out.println("Analizando sala");
-                analizarSala(nActual);
+                analizarSala(nActual,jugador);
                 break;
             case 3:
                 //agarrar objeto
@@ -195,7 +202,7 @@ public class ParcialEda {
         return nActual;
     }
 
-    public static void analizarSala(Nodo nActual) {
+    public static void analizarSala(Nodo nActual, Jugador jugador) {
         //SALA 1
         if (nActual.getSala().getNumeroSala() == 1) {
             System.out.println("Aqui hay muchas cosas, cigarillos, polillas, nesesitaria algo para ver mas de cerca entre tantas cosas,\n no voy a meter mano sin poder ver bien");
@@ -216,8 +223,14 @@ public class ParcialEda {
 
         //SALA 5
         if (nActual.getSala().getNumeroSala() == 5) {
+            if(jugador.getFosforo() != null){
+            jugador.getFosforo().usarFosforo();
+            System.out.println(" detras de un gran cuadro veo un camino para para ir a una sala oculta detras de una maquina del laboratorio");
+            nActual.getSala().setAnalizada(true);
+            }else{
             System.out.println("No logro ver bien en esta sala, nesesito un poco de luz para ver");
             nActual.getSala().setAnalizada(true);
+            }
         }
         //----RESTO----
         //SALA 0

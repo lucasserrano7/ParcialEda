@@ -24,8 +24,8 @@ public class Fosforo {
         return this;
     }
     
-    public static String usarFosforo(){
-        return "Encendes el fosforo descubriste un camino a una sala nueva... Que habra ahi?";
+    public void usarFosforo(){
+        System.out.println("Encendes el fosforo descubriste un camino a una sala nueva... Que habra ahi?");
     }
 
     public String getNombre() {
