@@ -9,6 +9,7 @@ import objetos.Fosforo;
 import objetos.LLave;
 import objetos.Lupa;
 
+
 /**
  *
  * @author Ema
@@ -16,11 +17,13 @@ import objetos.Lupa;
 public class Jugador {
     
     String nombreJugador;
-    int putaje;
+    int puntaje;
     Fosforo fosforo;
     Lupa lupa;
     Escalera escalera;
     LLave llave;
+    Nodo nAnterior;
+    boolean yaVolvioAtras;
 
     
     //getters y setters
@@ -32,13 +35,14 @@ public class Jugador {
         this.nombreJugador = nombreJugador;
     }
 
-    public int getPutaje() {
-        return putaje;
+    public int getPuntaje() {
+        return puntaje;
     }
 
-    public void setPutaje(int putaje) {
-        this.putaje = putaje;
+    public void setPuntaje(int puntaje) {
+        this.puntaje = puntaje;
     }
+
 
     public Fosforo getFosforo() {
         return fosforo;
@@ -71,6 +75,22 @@ public class Jugador {
 public void setLlave(LLave llave) {
     this.llave = llave;
 }
+
+    public Nodo getnAnterior() {
+        return nAnterior;
+    }
+
+    public void setnAnterior(Nodo nAnterior) {
+        this.nAnterior = nAnterior;
+    }
+
+    public boolean isYaVolvioAtras() {
+        return yaVolvioAtras;
+    }
+
+    public void setYaVolvioAtras(boolean yaVolvioAtras) {
+        this.yaVolvioAtras = yaVolvioAtras;
+    }
     
     
     
