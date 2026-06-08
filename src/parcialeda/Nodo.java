@@ -37,55 +37,87 @@ public class Nodo {
         this.siguiente[2] = siguiente3;
     }
 
-    public void opcionesDeAvanzar() {
-        int salas = 0;
-        
+    
+public void opcionesDeAvanzar() {
+
+    int salas = 0;
+
+    for (Nodo siguiente : this.siguiente) {
+
+        if (siguiente != null
+                && siguiente.getSala() != null) {
+
+            salas++;
+        }
+    }
+
+    if (salas > 0) {
+
+        System.out.println(
+                "Tenes "
+                + salas
+                + " salas para avanzar:"
+        );
+
+        int opcion = 1;
+
         for (Nodo siguiente : this.siguiente) {
-            // se verifica que no sea nulo tanto el sig como la sala
-            if (siguiente != null && siguiente.getSala()!= null) {
-                salas++;
+
+            if (siguiente != null
+                    && siguiente.getSala() != null) {
+
+                System.out.println(
+                        opcion
+                        + " - Sala "
+                        + siguiente.getSala().getNumeroSala()
+                        + " ("
+                        + siguiente.getSala().getDescripcionSala()
+                        + ")"
+                );
+
+                opcion++;
             }
         }
 
-        // cartel para avanzar
-        if (salas > 0) {
-            System.out.println("Tenes " + salas + " salas para avanzar:");
-            
-            for (Nodo siguiente : this.siguiente) {
-                if (siguiente != null && siguiente.getSala() != null) {
-                    System.out.println("- Sala: " + siguiente.getSala().getNumeroSala());
-                }
-            }
-        } else {
-            System.out.println("No hay salas disponibles para avanzar (¡Llegaste al final!).");
-        }
+    } else {
+
+        System.out.println(
+                "No hay salas disponibles para avanzar."
+        );
     }
+}
         
     public Nodo avanzar(int num){
         switch (num) {
             case 0:
                 System.out.println("Saliendo de avanzar");
-                return null;
+                return this;
             case 1:
                 if(this.siguiente[0] != null){
                 return this.siguiente[0];
                 }else{
-                return null;
+                return this;
                 }
             case 2:
                 if(this.siguiente[1] != null){
                 return this.siguiente[1];
                 }else{
-                return null;
+                return this;
                 }
             case 3:
                 if(this.siguiente[2] != null){
                 return this.siguiente[2];
                 }else{
-                return null;
+                return this;
                 }
+                case 4:
+                if(this.siguiente[3] != null){
+                return this.siguiente[3];
+                }else{
+                return this;
+    }
         }
-    return null;
+    return this;
     }
     
     // Getters y Setters

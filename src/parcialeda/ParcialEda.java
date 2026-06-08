@@ -24,6 +24,7 @@ public class ParcialEda {
         Reglas.reglas();
         Grafo grafo = new Grafo();
        
+       
         Cofre cofre = new Cofre();
         Escalera escalera = new Escalera();
         Fosforo fosforo = new Fosforo();
@@ -98,21 +99,24 @@ grafo.mostrarGrafo();
         System.out.println("-------------------");
         System.out.println("Comienza el juegoo..");
         
-        while (nActual != null) {            
-            System.out.println("Ubicacion Actual: " + nActual.getSala().getNumeroSala());
-            System.out.println("Descripcion sala Actual" + nActual.getSala().getDescripcionSala());
-            System.out.println("Tu puntaje: " + puntosTotales);
-            boolean t = true;
-            while(t){
-                System.out.println("Opciones para este cuarto\n");
-                mostrarOpciones(nActual,jugador);
-            }
-            
-            
-        }
-        
+     while (nActual != null) {
+
+    mostrarMensajeSala(nActual.getSala());
+
+    System.out.println("Ubicacion Actual: "
+            + nActual.getSala().getNumeroSala());
+
+    System.out.println("Descripcion sala Actual: "
+            + nActual.getSala().getDescripcionSala());
+
+    System.out.println("Tu puntaje: "
+            + puntosTotales);
+
+    nActual = mostrarOpciones(nActual, jugador);
+
 }
-    public static void mostrarOpciones(Nodo nActual,Jugador jugador){
+}
+    public static Nodo mostrarOpciones(Nodo nActual,Jugador jugador){
          
         Scanner scanner = new Scanner(System.in);
         boolean t = true;
@@ -120,9 +124,10 @@ grafo.mostrarGrafo();
         while(t){
         System.out.println("1: avanzar");
         System.out.println("2: analizar sala");
-        if(nActual.getSala().isAnalizada()){
+        if(nActual.getSala().isAnalizada()
+        && nActual.getSala().getObjeto() != null){
         System.out.println("3: agarrar objeto");
-        }
+}
         
         num = scanner.nextInt();
         if(num>0 && num< 5){t = false;}
@@ -147,7 +152,7 @@ grafo.mostrarGrafo();
             agarrarObjeto(nActual,jugador);
             
         }
-        
+        return nActual;
     }
     
     
@@ -216,4 +221,39 @@ grafo.mostrarGrafo();
     
     
     }
+    public static void mostrarMensajeSala(Sala sala){
+
+    switch(sala.getNumeroSala()){
+
+        case 0:
+            System.out.println("\n=== HALL DE ENTRADA ===");
+           
+            break;
+
+        case 1:
+            System.out.println("\n=== COMEDOR ===");
+         
+            break;
+
+        case 2:
+            System.out.println("\n=== CUARTO DE INVESTIGACIONES ===");
+            
+            break;
+
+        case 3:
+            System.out.println("\n=== PASADIZO SECRETO ===");
+            
+            break;
+
+        case 4:
+            System.out.println("\n=== TORRE OSCURA ===");
+           
+            break;
+
+        case 5:
+            System.out.println("\n=== LABORATORIO ===");
+            
+            break;
+    }
+}
 }
