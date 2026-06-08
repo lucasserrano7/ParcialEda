@@ -155,8 +155,7 @@ public class ParcialEda {
                 System.out.println("Cuartos Para Avanzar");
                 nActual.opcionesDeAvanzar();
                 System.out.println("Selecione un cuarto a avanzar(o no hacer nada 0)");
-                jugador.getnAnterior(nActual) ;
-
+                jugador.setnAnterior(nActual);
                 int avanzar = scanner.nextInt();
                 nActual = nActual.avanzar(avanzar);
                 if (nActual.getSala().getNumeroSala() == 3
@@ -181,11 +180,12 @@ public class ParcialEda {
                 break;
 
             case 4:
-                if (nAnterior != null && yaVolvioAtras == false) {
+                if (jugador.getnAnterior() != null && jugador.isYaVolvioAtras() == false) {
 
                     System.out.println("Retrocediendo a la sala anterior");
-                    nActual = nAnterior;
-                    yaVolvioAtras = true;
+                    nActual = jugador.getnAnterior();
+                    
+                    jugador.setYaVolvioAtras(true);
                 } else {
                     System.out.println("Solo puedes regresar en una sola oprtunidad");
                 }
