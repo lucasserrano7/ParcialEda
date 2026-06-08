@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
+
 package parcialeda;
 
 import com.sun.source.tree.BreakTree;
@@ -12,15 +9,8 @@ import objetos.Fosforo;
 import objetos.LLave;
 import objetos.Lupa;
 
-/**
- *
- * @author user
- */
 public class ParcialEda {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         Reglas.reglas();
         Grafo grafo = new Grafo();
@@ -94,6 +84,10 @@ public class ParcialEda {
         System.out.println("-------------------");
         System.out.println("Comienza el juegoo..");
 
+        // Códigos ANSI para colores
+        String ROJO = "\u001B[31m";
+        String RESET = "\u001B[0m";
+
         while (nActual != null) {
 
             // Verificar si llego a la salida
@@ -121,15 +115,16 @@ public class ParcialEda {
             System.out.println("Descripcion sala Actual: "
                     + nActual.getSala().getDescripcionSala());
 
-            System.out.println("Tu puntaje: "
-                    + jugador.getPuntaje());
+            // Puntaje
+            System.out.println("Tu puntaje: " + ROJO + jugador.getPuntaje() + RESET);
 
-            nActual = mostrarOpciones(nActual, jugador);
+            // Mostrar Opciones
+            nActual = mostrarOpciones(nActual, jugador, nSala5, nCentral);
 
         }
     }
 
-    public static Nodo mostrarOpciones(Nodo nActual, Jugador jugador) {
+    public static Nodo mostrarOpciones(Nodo nActual, Jugador jugador, Nodo sala5, Nodo nCentral) {
 
         Scanner scanner = new Scanner(System.in);
         boolean t = true;
@@ -146,9 +141,13 @@ public class ParcialEda {
 
             }
             System.out.println("4: regresar a sala anterior");
-
+            
+            if(nActual.getSala().isAnalizada() && jugador.getFosforo() != null){
+                System.out.println("5: Prender Fosforo");
+            }
+            
             num = scanner.nextInt();
-            if (num > 0 && num < 5) {
+            if (num > 0 && num < 6) {
                 t = false;
             }    
                 
@@ -178,7 +177,7 @@ public class ParcialEda {
             case 2:
                 //analizar sala
                 System.out.println("Analizando sala");
-                analizarSala(nActual,jugador);
+                analizarSala(nActual, jugador, sala5, nCentral);
                 break;
             case 3:
                 //agarrar objeto
@@ -196,63 +195,83 @@ public class ParcialEda {
                 } else {
                     System.out.println("Solo puedes regresar en una sola oprtunidad");
                 }
-
+                break;
+                
+            case 5:
+                if (nActual.getSala().getNumeroSala() == 5) {
+                    System.out.println("Prendiendo fósforo en el laboratorio...");
+                    analizarSala(nActual, jugador, sala5, nCentral);
+                } else {
+                    System.out.println("Prendés el fósforo, pero no parece revelar nada nuevo aquí.");
+                }
+                break;
         }
 
         return nActual;
     }
 
-    public static void analizarSala(Nodo nActual, Jugador jugador) {
+    public static void analizarSala(Nodo nActual, Jugador jugador, Nodo sala5, Nodo nCentral) {
+        String AZUL_OSCURO = "\u001B[34m";
+        String RESET = "\u001B[0m";
+
         //SALA 1
         if (nActual.getSala().getNumeroSala() == 1) {
-            System.out.println("Aqui hay muchas cosas, cigarillos, polillas, nesesitaria algo para ver mas de cerca entre tantas cosas,\n no voy a meter mano sin poder ver bien");
+            System.out.println(AZUL_OSCURO + "🔍 Aqui hay muchas cosas, cigarillos, polillas, nesesitaria algo para ver mas de cerca entre tantas cosas,\n no voy a meter mano sin poder ver bien" + RESET);
             nActual.getSala().setAnalizada(true);
         }
 
         //SALA 2
         if (nActual.getSala().getNumeroSala() == 2) {
-            System.out.println("Aqui hay muchos tesoros, un cofre dorado por ahi, es muy brillante");
+            System.out.println(AZUL_OSCURO + "🔍 Aqui hay muchos tesoros, un cofre dorado por ahi, es muy brillante" + RESET);
             nActual.getSala().setAnalizada(true);
         }
 
         //SALA 4
         if (nActual.getSala().getNumeroSala() == 4) {
-            System.out.println("esta habitacion esta llena de cosas fascinantes, planetas de telgopor, pinturas, microscopios y una llave reluciente");
+            System.out.println(AZUL_OSCURO + "🔍 esta habitacion esta llena de cosas fascinantes, planetas de telgopor, pinturas, microscopios y una llave reluciente" + RESET);
+            nActual.getSala().setAnalizada(true);
+        }
+        //SALA 3
+        if (nActual.getSala().getNumeroSala() == 3) {
+            System.out.println(AZUL_OSCURO + "🔍 Prendo otro fosforo, veo una escalera áhi" + RESET);
             nActual.getSala().setAnalizada(true);
         }
 
         //SALA 5
         if (nActual.getSala().getNumeroSala() == 5) {
             if(jugador.getFosforo() != null){
-            jugador.getFosforo().usarFosforo();
-            System.out.println(" detras de un gran cuadro veo un camino para para ir a una sala oculta detras de una maquina del laboratorio");
-            nActual.getSala().setAnalizada(true);
+                jugador.getFosforo().usarFosforo();
+                System.out.println(AZUL_OSCURO + "🔍 detras de un gran cuadro veo un camino para para ir a una sala oculta detras de una maquina del laboratorio" + RESET);
+                
+                // CORREGIDO: Reemplaza el null del array por el camino real hacia la sala central (Pasadizo)
+                sala5.setSiguiente(new Nodo[]{sala5.getSiguiente()[0], sala5.getSiguiente()[1], nCentral});
+                
+                nActual.getSala().setAnalizada(true);
             }else{
-            System.out.println("No logro ver bien en esta sala, nesesito un poco de luz para ver");
-            nActual.getSala().setAnalizada(true);
+                System.out.println(AZUL_OSCURO + "🔍 No logro ver bien en esta sala, nesesito un poco de luz para ver" + RESET);
+                nActual.getSala().setAnalizada(true);
             }
         }
         //----RESTO----
         //SALA 0
         if (nActual.getSala().getNumeroSala() == 0) {
-            System.out.println("No veo nada especial en este cuarto");
-            nActual.getSala().setAnalizada(true);
-        }
-        //SALA 3
-        if (nActual.getSala().getNumeroSala() == 3) {
-            System.out.println("No veo nada especial en este cuarto");
+            System.out.println(AZUL_OSCURO + "🔍 No veo nada especial en este cuarto" + RESET);
             nActual.getSala().setAnalizada(true);
         }
 
         //SALA 6
         if (nActual.getSala().getNumeroSala() == 6) {
-            System.out.println("No veo nada especial en este cuarto");
+            System.out.println(AZUL_OSCURO + "🔍 No veo nada especial en este cuarto" + RESET);
             nActual.getSala().setAnalizada(true);
         }
         //FIN
     }
 
     public static void agarrarObjeto(Nodo nActual, Jugador jugador) {
+        // Código ANSI para verde oscuro y reset
+        String VERDE_OSCURO = "\u001B[32m";
+        String RESET = "\u001B[0m";
+
         // SALA 4 -> LLAVE
         if (nActual.getSala().getNumeroSala() == 4) {
 
@@ -263,7 +282,7 @@ public class ParcialEda {
 
                 jugador.setLlave(llave);
                 jugador.setPuntaje(jugador.getPuntaje() + 20);
-                System.out.println("¡Encontraste una llave!");
+                System.out.println(VERDE_OSCURO + "¡Encontraste una llave!" + RESET);
             }
         }
 
@@ -280,10 +299,7 @@ public class ParcialEda {
 
                 jugador.setLupa(new Lupa());
                 jugador.setPuntaje(jugador.getPuntaje() + 30);
-
-                System.out.println(
-                        "Abriste el cofre y encontraste una lupa."
-                );
+                System.out.println(VERDE_OSCURO + "Abriste el cofre y encontraste una lupa." + RESET);
             }
         }
 
@@ -303,10 +319,7 @@ public class ParcialEda {
 
                 jugador.setFosforo(fosforo);
                 jugador.setPuntaje(jugador.getPuntaje() + 10);
-
-                System.out.println(
-                        "Usando la lupa encontraste un fosforo."
-                );
+                System.out.println(VERDE_OSCURO + "Usando la lupa encontraste un fosforo." + RESET);
             }
         }
 
@@ -320,10 +333,7 @@ public class ParcialEda {
 
                 jugador.setEscalera(escalera);
                 jugador.setPuntaje(jugador.getPuntaje() + 40);
-
-                System.out.println(
-                        "Encontraste una escalera."
-                );
+                System.out.println(VERDE_OSCURO + "Encontraste una escalera." + RESET);
             }
         }
     }
