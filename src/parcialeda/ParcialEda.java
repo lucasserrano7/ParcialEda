@@ -23,6 +23,7 @@ public class ParcialEda {
     public static void main(String[] args) {
         Reglas.reglas();
         Grafo grafo = new Grafo();
+        
        
        
         Cofre cofre = new Cofre();
@@ -40,7 +41,7 @@ public class ParcialEda {
         Sala salaCentral = new Sala(3,"Pasadizo secreto",false,escalera);
         Sala sala4 = new Sala(4,"Torre oscura",false,llave);
         Sala sala5 = new Sala(5,"Laboratorio",false,null);
-        Sala sala6Escape = new Sala(6,"Laboratorio",true,null);
+        Sala sala6Escape = new Sala(6,"Salida",true,null);
         
    
     
@@ -101,6 +102,24 @@ grafo.mostrarGrafo();
         
      while (nActual != null) {
 
+          // Verificar si llego a la salida
+    if (nActual.getSala().isSalida()) {
+
+        if (jugador.getEscalera() != null) {
+
+            System.out.println("Colocas la escalera y alcanzas la salida.");
+            System.out.println("FELICITACIONES, ESCAPASTE DE LA MANSION!!");
+
+            break; // termina el juego
+
+        } else {
+
+            System.out.println("La salida esta demasiado alta.");
+            System.out.println("Necesitas una escalera para escapar.");
+        }
+    }
+
+         
     mostrarMensajeSala(nActual.getSala());
 
     System.out.println("Ubicacion Actual: "
@@ -140,6 +159,15 @@ grafo.mostrarGrafo();
             System.out.println("Selecione un cuarto a avanzar(o no hacer nada 0)");
             int avanzar = scanner.nextInt();
             nActual = nActual.avanzar(avanzar);
+            if(nActual.getSala().getNumeroSala() == 3
+        && jugador.getFosforo() == null){
+
+    System.out.println(
+        "Esta demasiado oscuro para entrar. Necesitas un fosforo."
+    );
+
+    return nActual.avanzar(0);
+}
             break;
         case 2:
             //analizar sala
@@ -200,27 +228,77 @@ grafo.mostrarGrafo();
     //FIN
     }
     public static void agarrarObjeto(Nodo nActual , Jugador jugador){
-    if (nActual.getSala().getNumeroSala() == 1){
-        Fosforo fosforo = (Fosforo) nActual.getSala().getObjeto();
-        jugador.setFosforo(fosforo.agarrarFosforo());
+   // SALA 4 -> LLAVE
+    if(nActual.getSala().getNumeroSala() == 4){
+
+        if(jugador.getLlave() == null){
+
+            LLave llave =
+                (LLave) nActual.getSala().getObjeto();
+
+            jugador.setLlave(llave);
+
+            System.out.println("¡Encontraste una llave!");
+        }
     }
-    if (nActual.getSala().getNumeroSala() == 2){
-        Fosforo fosforo = (Fosforo) nActual.getSala().getObjeto();
-        jugador.setFosforo(fosforo.agarrarFosforo());
+
+    // SALA 2 -> COFRE -> LUPA
+    if(nActual.getSala().getNumeroSala() == 2){
+
+        if(jugador.getLlave() == null){
+
+            System.out.println(
+                "El cofre esta cerrado. Necesitas una llave."
+            );
+
+        }else{
+
+            jugador.setLupa(new Lupa());
+
+            System.out.println(
+                "Abriste el cofre y encontraste una lupa."
+            );
+        }
     }
-    if (nActual.getSala().getNumeroSala() == 3){
-        Fosforo fosforo = (Fosforo) nActual.getSala().getObjeto();
-        jugador.setFosforo(fosforo.agarrarFosforo());
+
+    // SALA 1 -> FOSFORO
+    if(nActual.getSala().getNumeroSala() == 1){
+
+        if(jugador.getLupa() == null){
+
+            System.out.println(
+                "Necesitas una lupa para buscar entre tantas cosas."
+            );
+
+        }else{
+
+            Fosforo fosforo =
+                (Fosforo) nActual.getSala().getObjeto();
+
+            jugador.setFosforo(fosforo);
+
+            System.out.println(
+                "Usando la lupa encontraste un fosforo."
+            );
+        }
     }
-    if (nActual.getSala().getNumeroSala() == 4){
-        Fosforo fosforo = (Fosforo) nActual.getSala().getObjeto();
-        jugador.setFosforo(fosforo.agarrarFosforo());
+
+    // SALA CENTRAL -> ESCALERA
+    if(nActual.getSala().getNumeroSala() == 3){
+
+        if(jugador.getEscalera() == null){
+
+            Escalera escalera =
+                (Escalera) nActual.getSala().getObjeto();
+
+            jugador.setEscalera(escalera);
+
+            System.out.println(
+                "Encontraste una escalera."
+            );
+        }
     }
-    
-    
-    
-    
-    }
+}
     public static void mostrarMensajeSala(Sala sala){
 
     switch(sala.getNumeroSala()){

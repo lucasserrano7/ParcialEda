@@ -6,6 +6,7 @@ package parcialeda;
 
 import objetos.Escalera;
 import objetos.Fosforo;
+import objetos.LLave;
 import objetos.Lupa;
 
 /**
@@ -19,6 +20,7 @@ public class Jugador {
     Fosforo fosforo;
     Lupa lupa;
     Escalera escalera;
+    LLave llave;
 
     
     //getters y setters
@@ -62,6 +64,13 @@ public class Jugador {
         this.escalera = escalera;
     }
     
+    public LLave getLlave() {
+    return llave;
+}
+
+public void setLlave(LLave llave) {
+    this.llave = llave;
+}
     
     
     
