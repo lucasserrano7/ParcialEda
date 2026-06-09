@@ -44,6 +44,37 @@ public class ParcialEda {
     
     public static void CrearMapa(){
         
+        Scanner scanner = new Scanner(System.in);
+        Grafo grafoCreado = new Grafo();
+        
+        System.out.println("Bienvenido al modo creador");
+        System.out.println("Con cuantas salas va a tener tu juego?");
+        
+        int cantidadSalas = scanner.nextInt();
+        scanner.nextLine();
+        
+        Nodo[] nodosCreados = new Nodo[cantidadSalas];
+        
+        for (int i = 0; i < cantidadSalas; i++) {
+            System.out.println("Creando sala: "+ i);
+            System.out.println("Agregale un nombre o descripcion a la sala:");
+            String nombreSala = scanner.nextLine();
+            
+            System.out.println("Esta sala es la salida? (Escribi 'false' o 'true'(verdadero))");
+            boolean essalida = scanner.nextBoolean();
+            scanner.nextLine();
+            
+            Sala nuvaSala = new Sala(i, nombreSala, essalida, null);
+            Nodo nuevoNodo = new Nodo(nuvaSala);
+            
+            nodosCreados[i] = nuevoNodo;
+            grafoCreado.agregarNodo(nuevoNodo);
+            
+            System.out.println("Sala "+ nombreSala + " creada exitosamente");
+        }
+        
+        System.out.println("todas las salas creadas");
+        
     }
     
     public static void Jugar(){
