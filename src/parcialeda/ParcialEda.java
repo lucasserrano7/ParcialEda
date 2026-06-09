@@ -180,13 +180,14 @@ public class ParcialEda {
 
             case 4:
                 if (pilaNodos.isEmpty()) {
-                    System.out.println("No puedes regresar: ¡Estás en la sala de inicio y no hay historial!");
+                    System.out.println("No hay salas anteriores!");
                 } else if (jugador.isYaVolvioAtras()) {
-                    System.out.println("Solo puedes regresar en una sola oprtunidad");
+                    System.out.println(" Solo podias retroceder una vez");
                 } else {
                     System.out.println("Retrocediendo a la sala anterior");
                     nActual = pilaNodos.pop();
                     jugador.setYaVolvioAtras(true);
+                    System.out.println("Ya no puedes retroceder mas");
                 }
                 break;
                 
