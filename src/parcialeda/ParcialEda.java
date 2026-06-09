@@ -34,7 +34,10 @@ public class ParcialEda {
                 default:
                     System.out.println("Opcion incorrecta, elegi otra porfa");
             }
+        
         }
+        
+        
     }
     
     public static void CrearMapa(){
@@ -70,7 +73,32 @@ public class ParcialEda {
         
         System.out.println("todas las salas creadas");
 
+        for (int i = 0; i < cantidadSalas; i++) {
+            System.out.println("Estan en la sala: " + nodosCreados[i].getSala().getDescripcionSala());
+            System.out.println("Cuantos caminos a otras salas tiene?:");
+            int cantidadCaminos = scanner.nextInt();
+            
+            if (cantidadCaminos > 0) {
+                Nodo[] sig = new Nodo[cantidadCaminos];
+                int[] puntos = new int[cantidadCaminos];
+                
+                for (int j = 0; j < cantidadCaminos; j++) {
+                    System.out.println("A que Sala lleva el camino: " + (j + 1)+"? (De 0 a '+ (cantidadCaminos - 1)') "  );
+                    int destino = scanner.nextInt();
+                    sig[j] = nodosCreados[destino];
+                    
+                    System.out.println("Cuantoas puntos gana el jugador por llegar  aesta sala?");
+                    puntos[j] = scanner.nextInt();
+                }
+                nodosCreados[i].setSiguiente(sig);
+                nodosCreados[i].setPuntos(puntos);
+                
+            }
+        }
+        System.out.println("Salas Conectadas!!");
     }
+    
+    
     public static void Jugar() {
         Reglas.reglas();
         Grafo grafo = new Grafo();

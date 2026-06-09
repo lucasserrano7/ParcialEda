@@ -6,11 +6,13 @@ import parcialeda.Sala;
 public class Nodo {
     private Sala sala;
     private Nodo[] siguiente;
+    private int[] puntos; 
 
     public Nodo(Sala sala, Nodo siguiente1) {
         this.sala = sala;
         this.siguiente = new Nodo[1];
         this.siguiente[0] = siguiente1;
+        
     }
     
     //para un nodo
@@ -129,4 +131,13 @@ public class Nodo {
     public void setSiguiente(Nodo[] siguiente) {
         this.siguiente = siguiente;
     }
+
+    public int[] getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(int[] puntos) {
+        this.puntos = puntos;
+    }
+    
 }
