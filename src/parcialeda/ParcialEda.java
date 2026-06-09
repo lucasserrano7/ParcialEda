@@ -83,7 +83,7 @@ public class ParcialEda {
                 int[] puntos = new int[cantidadCaminos];
                 
                 for (int j = 0; j < cantidadCaminos; j++) {
-                    System.out.println("A que Sala lleva el camino: " + (j + 1)+"? (De 0 a '+ (cantidadCaminos - 1)') "  );
+                    System.out.println("A que Sala lleva el camino: " + (j + 1)+ "? (De 0 a " + (cantidadSalas - 1)+ ") "  );
                     int destino = scanner.nextInt();
                     sig[j] = nodosCreados[destino];
                     
@@ -96,6 +96,35 @@ public class ParcialEda {
             }
         }
         System.out.println("Salas Conectadas!!");
+        
+        Nodo nActual = nodosCreados[0];
+        Jugador jugarCrearMapa = new Jugador();
+        
+        
+                System.out.println("-------------------");
+        System.out.println("Comienza el juegoo..");
+
+        String ROJO = "\u001B[31m";
+        String RESET = "\u001B[0m";
+
+        while (nActual != null) {
+
+            if (nActual.getSala().isSalida()) {
+                System.out.println("LLegaste a la salida!!");
+                System.out.println("Puntaje final: " + jugarCrearMapa.getPuntaje());
+                    break;
+            }
+
+            mostrarMensajeSala(nActual.getSala());
+
+            System.out.println("Ubicacion Actual: " + nActual.getSala().getNumeroSala());
+            System.out.println("Descripcion sala Actual: " + nActual.getSala().getDescripcionSala());
+            System.out.println("Tu puntaje: " + ROJO + jugarCrearMapa.getPuntaje() + RESET);
+
+            nActual = mostrarOpciones(nActual, jugarCrearMapa, null, null, null);
+        }
+        
+        
     }
     
     
