@@ -84,6 +84,7 @@ public class ParcialEda {
         System.out.println("-------------------");
         System.out.println("Comienza el juegoo..");
 
+        cargarTip();
         // Códigos ANSI para colores
         String ROJO = "\u001B[31m";
         String RESET = "\u001B[0m";
@@ -370,5 +371,47 @@ public class ParcialEda {
 
                 break;
         }
+    }
+    
+    public static void cargarTip(){
+     int numero = (int) (Math.random() * 10) + 1;
+     
+    int dia = 3;
+
+    switch (numero) {
+        case 1:
+            System.out.println("Pista ALEATORIA A: Nesesitas algo para subir, podrias nesesitar una tirolina o una escalera");
+            break;
+        case 2:
+            System.out.println("Pista ALEATORIA B: Una Lupa podria servir para ver entre tantas cosas");       
+            break;
+        case 3:
+            System.out.println("Pista ALEATORIA C: la oscuridad no permite que vea bien todos los cuartos");  
+            break;
+        case 4:
+            System.out.println("Pista ALEATORIA D: Ese cofree Dorado debe de tener algo importante  adentro para que lo hayan cerrado"); 
+            break;
+        case 5:
+            System.out.println("Pista ALEATORIA E: Estas salas estan todas conectadas Pero que raro que entre ellas no haya una sala central");
+            break;
+        case 6:
+            System.out.println("Pista ALEATORIA F: En el comedor seguro que hay algo que podria usar para usar en cuartos oscuros");
+            break;
+        case 7:
+            System.out.println("Pista ALEATORIA G: Esta Mansion es muy solitaria, no creo que haya nadie adentro");
+            break;
+        case 8:
+            System.out.println("Pista ALEATORIA H: Veo el Cartel del Mapa de la casa, las habitaciones son, 1,2,3,4,5,6,7 ");
+            break;    
+        case 9:
+            System.out.println("Pista ALEATORIA I: Veo el Cartel del Mapa de la casa, las habitaciones son, 1,2,3,4,5,6,7 ");
+            break;
+        case 10:
+            System.out.println("Pista ALEATORIA J: Veo el Cartel del Mapa de la casa, las habitaciones son, 1,2,3,4,5,6,7 ");
+            break;
+        default:
+            break;
+    }
+
     }
 }
