@@ -12,6 +12,41 @@ import objetos.Lupa;
 public class ParcialEda {
 
     public static void main(String[] args) {
+        
+        Scanner scan = new Scanner(System.in);
+        boolean salirDelJuego = false;
+        
+        while (!salirDelJuego) { 
+            
+            System.out.println("Bienvenido al Escape Room");
+            System.out.println("1. Jugar a mapa ya creado");
+            System.out.println("2. Crear tu propio mapa");
+            System.out.println("3. Salir");
+            System.out.println("Que eliges?:");
+            
+            switch (scan.nextInt()) {
+                case 1:
+                    Jugar();
+                    break;
+                case 2:
+                    CrearMapa();
+                    break;
+                case 3:
+                    salirDelJuego= true;
+                    break;
+                default:
+                    System.out.println("Opcion incorrecta, elegi otra porfa");
+            }
+        }
+        
+        
+    }
+    
+    public static void CrearMapa(){
+        
+    }
+    
+    public static void Jugar(){
         Reglas.reglas();
         Grafo grafo = new Grafo();
 
