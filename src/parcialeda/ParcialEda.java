@@ -1,8 +1,7 @@
-
 package parcialeda;
 
-import com.sun.source.tree.BreakTree;
 import java.util.Scanner;
+import java.util.Stack;
 import objetos.Cofre;
 import objetos.Escalera;
 import objetos.Fosforo;
@@ -12,12 +11,10 @@ import objetos.Lupa;
 public class ParcialEda {
 
     public static void main(String[] args) {
-        
         Scanner scan = new Scanner(System.in);
         boolean salirDelJuego = false;
         
         while (!salirDelJuego) { 
-            
             System.out.println("Bienvenido al Escape Room");
             System.out.println("1. Jugar a mapa ya creado");
             System.out.println("2. Crear tu propio mapa");
@@ -32,21 +29,18 @@ public class ParcialEda {
                     CrearMapa();
                     break;
                 case 3:
-                    salirDelJuego= true;
+                    salirDelJuego = true;
                     break;
                 default:
                     System.out.println("Opcion incorrecta, elegi otra porfa");
             }
         }
-        
-        
     }
     
-    public static void CrearMapa(){
-        
+    public static void CrearMapa() {
     }
     
-    public static void Jugar(){
+    public static void Jugar() {
         Reglas.reglas();
         Grafo grafo = new Grafo();
 
@@ -56,7 +50,6 @@ public class ParcialEda {
         LLave llave = new LLave();
         Lupa lupa = new Lupa();
 
-        //JUGADOR
         Jugador jugador = new Jugador();
 
         Sala inicio = new Sala(0, "Hall de entrada", false, null);
@@ -75,33 +68,13 @@ public class ParcialEda {
         Nodo nSala5 = new Nodo(sala5);
         Nodo nSala6 = new Nodo(sala6Escape);
 
-        nInicio.setSiguiente(
-                new Nodo[]{nSala1, nSala2}
-        );
-
-        nSala1.setSiguiente(
-                new Nodo[]{nSala2, nSala4}
-        );
-
-        nSala2.setSiguiente(
-                new Nodo[]{nSala1, nSala5}
-        );
-
-        nCentral.setSiguiente(
-                new Nodo[]{nSala1, nSala2, nSala4, nSala5}
-        );
-
-        nSala4.setSiguiente(
-                new Nodo[]{nSala1, nSala5, nSala6}
-        );
-
-        nSala5.setSiguiente(
-                new Nodo[]{nSala2,nSala4,null}
-        );
-
-        nSala6.setSiguiente(
-                new Nodo[]{nSala4}
-        );
+        nInicio.setSiguiente(new Nodo[]{nSala1, nSala2});
+        nSala1.setSiguiente(new Nodo[]{nSala2, nSala4});
+        nSala2.setSiguiente(new Nodo[]{nSala1, nSala5});
+        nCentral.setSiguiente(new Nodo[]{nSala1, nSala2, nSala4, nSala5});
+        nSala4.setSiguiente(new Nodo[]{nSala1, nSala5, nSala6});
+        nSala5.setSiguiente(new Nodo[]{nSala2, nSala4, null});
+        nSala6.setSiguiente(new Nodo[]{nSala4});
 
         grafo.agregarNodo(nInicio);
         grafo.agregarNodo(nSala1);
@@ -115,29 +88,24 @@ public class ParcialEda {
 
         Scanner scanner = new Scanner(System.in);
         Nodo nActual = nInicio;
-        int puntosTotales = 0;
+        Stack<Nodo> pilaNodos = new Stack<>();
+        
         System.out.println("-------------------");
         System.out.println("Comienza el juegoo..");
 
         cargarTip();
-        // Códigos ANSI para colores
+        
         String ROJO = "\u001B[31m";
         String RESET = "\u001B[0m";
 
         while (nActual != null) {
 
-            // Verificar si llego a la salida
             if (nActual.getSala().isSalida()) {
-
                 if (jugador.getEscalera() != null) {
-
                     System.out.println("Colocas la escalera y alcanzas la salida.");
                     System.out.println("FELICITACIONES, ESCAPASTE DE LA MANSION!!");
-
-                    break; // termina el juego
-
+                    break;
                 } else {
-
                     System.out.println("La salida esta demasiado alta.");
                     System.out.println("nesesito una forma de llegar hasta alla arriba.");
                 }
@@ -145,91 +113,80 @@ public class ParcialEda {
 
             mostrarMensajeSala(nActual.getSala());
 
-            System.out.println("Ubicacion Actual: "
-                    + nActual.getSala().getNumeroSala());
-
-            System.out.println("Descripcion sala Actual: "
-                    + nActual.getSala().getDescripcionSala());
-
-            // Puntaje
+            System.out.println("Ubicacion Actual: " + nActual.getSala().getNumeroSala());
+            System.out.println("Descripcion sala Actual: " + nActual.getSala().getDescripcionSala());
             System.out.println("Tu puntaje: " + ROJO + jugador.getPuntaje() + RESET);
 
-            // Mostrar Opciones
-            nActual = mostrarOpciones(nActual, jugador, nSala5, nCentral);
-
+            nActual = mostrarOpciones(nActual, jugador, nSala5, nCentral, pilaNodos);
         }
     }
 
-    public static Nodo mostrarOpciones(Nodo nActual, Jugador jugador, Nodo sala5, Nodo nCentral) {
-
+    public static Nodo mostrarOpciones(Nodo nActual, Jugador jugador, Nodo sala5, Nodo nCentral, Stack<Nodo> pilaNodos) {
         Scanner scanner = new Scanner(System.in);
         boolean t = true;
         int num = 0;
+        
         while (t) {
-            
             try {
+                System.out.println("1: avanzar");
+                System.out.println("2: analizar sala");
+                if (nActual.getSala().isAnalizada() && nActual.getSala().getObjeto() != null) {
+                    System.out.println("3: agarrar objeto");
+                }
+                System.out.println("4: regresar a sala anterior");
                 
-            System.out.println("1: avanzar");
-            System.out.println("2: analizar sala");
-            if (nActual.getSala().isAnalizada()
-                    && nActual.getSala().getObjeto() != null) {
-                System.out.println("3: agarrar objeto");
-
-            }
-            System.out.println("4: regresar a sala anterior");
-            
-            if(nActual.getSala().isAnalizada() && jugador.getFosforo() != null){
-                System.out.println("5: Prender Fosforo");
-            }
-            
-            num = scanner.nextInt();
-            if (num > 0 && num < 6) {
-                t = false;
-            }    
+                if (nActual.getSala().isAnalizada() && jugador.getFosforo() != null) {
+                    System.out.println("5: Prender Fosforo");
+                }
                 
+                num = scanner.nextInt();
+                if (num > 0 && num < 6) {
+                    t = false;
+                }    
             } catch (Exception e) {
             }
-            
         }
+        
         switch (num) {
             case 1:
-                //avanzar
                 System.out.println("Cuartos Para Avanzar");
                 nActual.opcionesDeAvanzar();
                 System.out.println("Selecione un cuarto a avanzar(o no hacer nada 0)");
-                jugador.setnAnterior(nActual);
-                int avanzar = scanner.nextInt();
-                nActual = nActual.avanzar(avanzar);
-                if (nActual.getSala().getNumeroSala() == 3
-                        && jugador.getFosforo() == null) {
-
-                    System.out.println(
-                            "Esta demasiado oscuro para entrar. Necesitas un fosforo."
-                    );
-
-                    return nActual.avanzar(0);
+                
+                int avanzar = scanner.nextInt();            
+                if (avanzar != 0) {
+                    pilaNodos.push(nActual);
+                    jugador.setnAnterior(nActual);
+                    nActual = nActual.avanzar(avanzar);
+                }
+                
+                if (nActual.getSala().getNumeroSala() == 3 && jugador.getFosforo() == null) {
+                    System.out.println("Esta demasiado oscuro para entrar. Necesitas un fosforo.");
+                    if (!pilaNodos.isEmpty()) {
+                        nActual = pilaNodos.pop();
+                    }
                 }
                 break;
+                
             case 2:
-                //analizar sala
                 System.out.println("Analizando sala");
                 analizarSala(nActual, jugador, sala5, nCentral);
                 break;
+                
             case 3:
-                //agarrar objeto
                 System.out.println("Agarrar el objeto de esta sala");
                 agarrarObjeto(nActual, jugador);
                 break;
 
             case 4:
-                if (jugador.getnAnterior() != null && jugador.isYaVolvioAtras() == false) {
-
-                    System.out.println("Retrocediendo a la sala anterior");
-                    nActual = jugador.getnAnterior();
-                    
-                    jugador.setYaVolvioAtras(true);
-                } else {
+                if (pilaNodos.isEmpty()) {
+                    System.out.println("No puedes regresar: ¡Estás en la sala de inicio y no hay historial!");
+                } else if (jugador.isYaVolvioAtras()) {
                     System.out.println("Solo puedes regresar en una sola oprtunidad");
+                } else {
+                    System.out.println("Retrocediendo a la sala anterior");
+                    nActual = pilaNodos.pop();
+                    jugador.setYaVolvioAtras(true);
                 }
                 break;
                 
@@ -250,121 +207,86 @@ public class ParcialEda {
         String AZUL_OSCURO = "\u001B[34m";
         String RESET = "\u001B[0m";
 
-        //SALA 1
         if (nActual.getSala().getNumeroSala() == 1) {
             System.out.println(AZUL_OSCURO + "🔍 Aqui hay muchas cosas, cigarillos, polillas, nesesitaria algo para ver mas de cerca entre tantas cosas,\n no voy a meter mano sin poder ver bien" + RESET);
             nActual.getSala().setAnalizada(true);
         }
 
-        //SALA 2
         if (nActual.getSala().getNumeroSala() == 2) {
             System.out.println(AZUL_OSCURO + "🔍 Aqui hay muchos tesoros, un cofre dorado por ahi, es muy brillante" + RESET);
             nActual.getSala().setAnalizada(true);
         }
 
-        //SALA 4
         if (nActual.getSala().getNumeroSala() == 4) {
             System.out.println(AZUL_OSCURO + "🔍 esta habitacion esta llena de cosas fascinantes, planetas de telgopor, pinturas, microscopios y una llave reluciente" + RESET);
             nActual.getSala().setAnalizada(true);
         }
-        //SALA 3
+        
         if (nActual.getSala().getNumeroSala() == 3) {
             System.out.println(AZUL_OSCURO + "🔍 Prendo otro fosforo, veo una escalera áhi" + RESET);
             nActual.getSala().setAnalizada(true);
         }
 
-        //SALA 5
         if (nActual.getSala().getNumeroSala() == 5) {
-            if(jugador.getFosforo() != null){
+            if (jugador.getFosforo() != null) {
                 jugador.getFosforo().usarFosforo();
                 System.out.println(AZUL_OSCURO + "🔍 detras de un gran cuadro veo un camino para para ir a una sala oculta detras de una maquina del laboratorio" + RESET);
-                
                 sala5.setSiguiente(new Nodo[]{sala5.getSiguiente()[0], sala5.getSiguiente()[1], nCentral});
-                
                 nActual.getSala().setAnalizada(true);
-            }else{
+            } else {
                 System.out.println(AZUL_OSCURO + "🔍 No logro ver bien en esta sala, nesesito un poco de luz para ver" + RESET);
                 nActual.getSala().setAnalizada(true);
             }
         }
-        //----RESTO----
-        //SALA 0
+        
         if (nActual.getSala().getNumeroSala() == 0) {
             System.out.println(AZUL_OSCURO + "🔍 No veo nada especial en este cuarto" + RESET);
             nActual.getSala().setAnalizada(true);
         }
 
-        //SALA 6
         if (nActual.getSala().getNumeroSala() == 6) {
             System.out.println(AZUL_OSCURO + "🔍 No veo nada especial en este cuarto" + RESET);
             nActual.getSala().setAnalizada(true);
         }
-        //FIN
     }
 
     public static void agarrarObjeto(Nodo nActual, Jugador jugador) {
         String VERDE_OSCURO = "\u001B[32m";
         String RESET = "\u001B[0m";
 
-        // SALA 4 -> LLAVE
         if (nActual.getSala().getNumeroSala() == 4) {
-
             if (jugador.getLlave() == null) {
-
-                LLave llave
-                        = (LLave) nActual.getSala().getObjeto();
-
+                LLave llave = (LLave) nActual.getSala().getObjeto();
                 jugador.setLlave(llave);
                 jugador.setPuntaje(jugador.getPuntaje() + 20);
                 System.out.println(VERDE_OSCURO + "¡Encontraste una llave!" + RESET);
             }
         }
 
-        // SALA 2 -> COFRE -> LUPA
         if (nActual.getSala().getNumeroSala() == 2) {
-
             if (jugador.getLlave() == null) {
-
-                System.out.println(
-                        "El cofre esta cerrado.."
-                );
-
+                System.out.println("El cofre esta cerrado..");
             } else {
-
                 jugador.setLupa(new Lupa());
                 jugador.setPuntaje(jugador.getPuntaje() + 30);
                 System.out.println(VERDE_OSCURO + "Abriste el cofre y encontraste una lupa." + RESET);
             }
         }
 
-        // SALA 1 -> FOSFORO
         if (nActual.getSala().getNumeroSala() == 1) {
-
             if (jugador.getLupa() == null) {
-
-                System.out.println(
-                        "Necesitas algo para ver de cerca."
-                );
-
+                System.out.println("Necesitas algo para ver de cerca.");
             } else {
-
-                Fosforo fosforo
-                        = (Fosforo) nActual.getSala().getObjeto();
-
+                Fosforo fosforo = (Fosforo) nActual.getSala().getObjeto();
                 jugador.setFosforo(fosforo);
                 jugador.setPuntaje(jugador.getPuntaje() + 10);
                 System.out.println(VERDE_OSCURO + "Usando la lupa encontraste un fosforo." + RESET);
             }
         }
 
-        // SALA CENTRAL -> ESCALERA
         if (nActual.getSala().getNumeroSala() == 3) {
-
             if (jugador.getEscalera() == null) {
-
-                Escalera escalera
-                        = (Escalera) nActual.getSala().getObjeto();
-
+                Escalera escalera = (Escalera) nActual.getSala().getObjeto();
                 jugador.setEscalera(escalera);
                 jugador.setPuntaje(jugador.getPuntaje() + 40);
                 System.out.println(VERDE_OSCURO + "Encontraste una escalera." + RESET);
@@ -373,80 +295,61 @@ public class ParcialEda {
     }
 
     public static void mostrarMensajeSala(Sala sala) {
-
         switch (sala.getNumeroSala()) {
-
             case 0:
                 System.out.println("\n=== HALL DE ENTRADA ===");
-
                 break;
-
             case 1:
                 System.out.println("\n=== COMEDOR ===");
-
                 break;
-
             case 2:
                 System.out.println("\n=== CUARTO DE INVESTIGACIONES ===");
-
                 break;
-
             case 3:
                 System.out.println("\n=== PASADIZO SECRETO ===");
-
                 break;
-
             case 4:
                 System.out.println("\n=== TORRE OSCURA ===");
-
                 break;
-
             case 5:
                 System.out.println("\n=== LABORATORIO ===");
-
                 break;
         }
     }
     
-    public static void cargarTip(){
-     int numero = (int) (Math.random() * 10) + 1;
-     
-    int dia = 3;
-
-    switch (numero) {
-        case 1:
-            System.out.println("Pista ALEATORIA A: Nesesitas algo para subir, podrias nesesitar una tirolina o una escalera");
-            break;
-        case 2:
-            System.out.println("Pista ALEATORIA B: Una Lupa podria servir para ver entre tantas cosas");       
-            break;
-        case 3:
-            System.out.println("Pista ALEATORIA C: la oscuridad no permite que vea bien todos los cuartos");  
-            break;
-        case 4:
-            System.out.println("Pista ALEATORIA D: Ese cofree Dorado debe de tener algo importante  adentro para que lo hayan cerrado"); 
-            break;
-        case 5:
-            System.out.println("Pista ALEATORIA E: Estas salas estan todas conectadas Pero que raro que entre ellas no haya una sala central");
-            break;
-        case 6:
-            System.out.println("Pista ALEATORIA F: En el comedor seguro que hay algo que podria usar para usar en cuartos oscuros");
-            break;
-        case 7:
-            System.out.println("Pista ALEATORIA G: Esta Mansion es muy solitaria, no creo que haya nadie adentro");
-            break;
-        case 8:
-            System.out.println("Pista ALEATORIA H: Veo el Cartel del Mapa de la casa, las habitaciones son, 1,2,3,4,5,6,7 ");
-            break;    
-        case 9:
-        System.out.println("Pista ALEATORIA I: A veces para abrir algo primero debes encontrar aquello que lo mantiene cerrado.");
-            break;
-        case 10:
-        System.out.println("Pista ALEATORIA J: La libertad esta mas cerca de lo que crees, pero nadie alcanza las alturas con los pies en el suelo.");
-            break;
-        default:
-            break;
-    }
-
+    public static void cargarTip() {
+        int numero = (int) (Math.random() * 10) + 1;
+        switch (numero) {
+            case 1:
+                System.out.println("Pista ALEATORIA A: Nesesitas algo para subir, podrias nesesitar una tirolina o una escalera");
+                break;
+            case 2:
+                System.out.println("Pista ALEATORIA B: Una Lupa podria servir para ver entre tantas cosas");       
+                break;
+            case 3:
+                System.out.println("Pista ALEATORIA C: la oscuridad no permite que vea bien todos los cuartos");  
+                break;
+            case 4:
+                System.out.println("Pista ALEATORIA D: Ese cofree Dorado debe de tener algo importante  adentro para que lo hayan cerrado"); 
+                break;
+            case 5:
+                System.out.println("Pista ALEATORIA E: Estas salas estan todas conectadas Pero que raro que entre ellas no haya una sala central");
+                break;
+            case 6:
+                System.out.println("Pista ALEATORIA F: En el comedor seguro que hay algo que podria usar para usar en cuartos oscuros");
+                break;
+            case 7:
+                System.out.println("Pista ALEATORIA G: Esta Mansion es muy solitaria, no creo que haya nadie adentro");
+                break;
+            case 8:
+                System.out.println("Pista ALEATORIA H: Veo el Cartel del Mapa de la casa, las habitaciones son, 1,2,3,4,5,6,7 ");
+                break;    
+            case 9:
+                System.out.println("Pista ALEATORIA I: A veces para abrir algo primero debes encontrar aquello que lo mantiene cerrado.");
+                break;
+            case 10:
+                System.out.println("Pista ALEATORIA J: La libertad esta mas cerca de lo que crees, pero nadie alcanza las alturas con los pies en el suelo.");
+                break;
+        }
     }
 }
