@@ -404,10 +404,10 @@ public class ParcialEda {
             System.out.println("Pista ALEATORIA H: Veo el Cartel del Mapa de la casa, las habitaciones son, 1,2,3,4,5,6,7 ");
             break;    
         case 9:
-            System.out.println("Pista ALEATORIA I: Veo el Cartel del Mapa de la casa, las habitaciones son, 1,2,3,4,5,6,7 ");
+        System.out.println("Pista ALEATORIA I: A veces para abrir algo primero debes encontrar aquello que lo mantiene cerrado.");
             break;
         case 10:
-            System.out.println("Pista ALEATORIA J: Veo el Cartel del Mapa de la casa, las habitaciones son, 1,2,3,4,5,6,7 ");
+        System.out.println("Pista ALEATORIA J: La libertad esta mas cerca de lo que crees, pero nadie alcanza las alturas con los pies en el suelo.");
             break;
         default:
             break;
