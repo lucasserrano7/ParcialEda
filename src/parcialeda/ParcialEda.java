@@ -121,12 +121,62 @@ public class ParcialEda {
             System.out.println("Descripcion sala Actual: " + nActual.getSala().getDescripcionSala());
             System.out.println("Tu puntaje: " + ROJO + jugarCrearMapa.getPuntaje() + RESET);
 
-            nActual = mostrarOpciones(nActual, jugarCrearMapa, null, null, null);
+            nActual = mostrarOpcionesCreadorMapa(nActual, jugarCrearMapa);
         }
         
         
     }
     
+    public static Nodo mostrarOpcionesCreadorMapa(Nodo nActual, Jugador jugador) {
+        Scanner scanner = new Scanner(System.in);
+        boolean t = true;
+        int num = 0;
+        
+        while (t) {
+            try {
+                System.out.println("1: avanzar");
+                System.out.println("2: analizar sala");
+                if (nActual.getSala().isAnalizada() && nActual.getSala().getObjeto() != null) {
+                    System.out.println("3: agarrar objeto");
+                }
+                System.out.println("4: regresar a sala anterior");
+                
+                
+                num = scanner.nextInt();
+                if (num == 1 && num == 2) {
+                    t = false;
+                }    
+            } catch (Exception e) {
+                System.out.println("Prfa ingrtesa un numero");
+                scanner.nextLine();
+            }
+        }
+        
+        switch (num) {
+            case 1:
+                System.out.println("Cuartos Para Avanzar");
+                nActual.opcionesDeAvanzar();
+                System.out.println("Selecione un cuarto a avanzar(o no hacer nada 0)");
+                jugador.setnAnterior(nActual);
+                int avanzar = scanner.nextInt();         
+                nActual = nActual.avanzar(avanzar);
+                
+                break;
+                
+            case 2:
+                if (jugador.getnAnterior() != null && jugador.isYaVolvioAtras() == false) {
+                    System.out.println("Retrocendiendo");
+                    nActual = jugador.getnAnterior();
+                    jugador.setYaVolvioAtras(true);
+                } else {
+                    System.out.println("No puedes regresar de sala mas de una vez");
+                }
+                break;
+        }
+
+        return nActual;
+    }
+
     
     public static void Jugar() {
         Reglas.reglas();
