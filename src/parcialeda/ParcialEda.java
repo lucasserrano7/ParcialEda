@@ -223,6 +223,26 @@ public class ParcialEda {
         grafo.agregarNodo(nSala6);
 
         grafo.mostrarGrafo();
+        
+        System.out.println("\nAnalizando el diseño del laberinto...");
+
+boolean tieneSalida =
+        verificarSalidaDFS(nInicio, 7);
+
+if (tieneSalida) {
+
+    System.out.println(
+        "El mapa tiene una ruta válida hasta la salida."
+    );
+
+} else {
+
+    System.out.println(
+        "¡CUIDADO! Este mapa es una trampa mortal. ¡No hay forma de llegar a la salida!"
+    );
+      System.out.println("Vamos a jugarlo igual para ver cuánto aguantás");
+        
+}
 
         Scanner scanner = new Scanner(System.in);
         Nodo nActual = nInicio;
@@ -491,4 +511,47 @@ public class ParcialEda {
                 break;
         }
     }
+   
+     public static boolean verificarSalidaDFS(Nodo inicio, int totalSalas) {
+        // Este arreglo será nuestras "migas de pan". Empieza todo en false.
+        boolean[] visitados = new boolean[totalSalas]; 
+        return explorarGrafo(inicio, visitados);
+         
+    }
+
+
+    // El explorador recursivo
+    private static boolean explorarGrafo(Nodo nActual, boolean[] visitados) {
+       
+        if (nActual == null) return false;
+        
+        int idSala = nActual.getSala().getNumeroSala();
+        
+        
+        if (visitados[idSala]) return false;
+        
+        
+        visitados[idSala] = true;
+        
+        if (nActual.getSala().isSalida()) return true;
+        
+        
+        Nodo[] siguientes = nActual.getSiguiente();
+        if (siguientes != null) {
+            for (int i = 0; i < siguientes.length; i++) {
+                Nodo nodoDestino = siguientes[i];
+                
+               
+                if (explorarGrafo(nodoDestino, visitados)) {
+                    return true; 
+                    
+                     
+                }
+            }
+        }
+        
+        
+        return false;
+    }
+      
 }
