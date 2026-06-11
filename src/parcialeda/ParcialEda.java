@@ -13,14 +13,14 @@ public class ParcialEda {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         boolean salirDelJuego = false;
-        
-        while (!salirDelJuego) { 
+
+        while (!salirDelJuego) {
             System.out.println("Bienvenido al Escape Room");
             System.out.println("1. Jugar a mapa ya creado");
             System.out.println("2. Crear tu propio mapa");
             System.out.println("3. Salir");
             System.out.println("Que eliges?:");
-            
+
             switch (scan.nextInt()) {
                 case 1:
                     Jugar();
@@ -34,74 +34,92 @@ public class ParcialEda {
                 default:
                     System.out.println("Opcion incorrecta, elegi otra porfa");
             }
-        
+
         }
-        
-        
+
     }
-    
-    public static void CrearMapa(){
-        
+
+    public static void CrearMapa() {
+
         Scanner scanner = new Scanner(System.in);
         Grafo grafoCreado = new Grafo();
-        
+
         System.out.println("Bienvenido al modo creador");
         System.out.println("Con cuantas salas va a tener tu juego?");
-        
+
         int cantidadSalas = scanner.nextInt();
         scanner.nextLine();
-        
+
         Nodo[] nodosCreados = new Nodo[cantidadSalas];
-        
+
         for (int i = 0; i < cantidadSalas; i++) {
-            System.out.println("Creando sala: "+ i);
+            System.out.println("Creando sala: " + i);
             System.out.println("Agregale un nombre o descripcion a la sala:");
             String nombreSala = scanner.nextLine();
-            
+
             System.out.println("Esta sala es la salida? (Escribi 'false' o 'true'(verdadero))");
             boolean essalida = scanner.nextBoolean();
             scanner.nextLine();
-            
+
             Sala nuvaSala = new Sala(i, nombreSala, essalida, null);
             Nodo nuevoNodo = new Nodo(nuvaSala);
-            
+
             nodosCreados[i] = nuevoNodo;
             grafoCreado.agregarNodo(nuevoNodo);
-            
-            System.out.println("Sala "+ nombreSala + " creada exitosamente");
+
+            System.out.println("Sala " + nombreSala + " creada exitosamente");
         }
-        
+
         System.out.println("todas las salas creadas");
 
         for (int i = 0; i < cantidadSalas; i++) {
             System.out.println("Estan en la sala: " + nodosCreados[i].getSala().getDescripcionSala());
             System.out.println("Cuantos caminos a otras salas tiene?:");
             int cantidadCaminos = scanner.nextInt();
-            
+
             if (cantidadCaminos > 0) {
                 Nodo[] sig = new Nodo[cantidadCaminos];
                 int[] puntos = new int[cantidadCaminos];
-                
+
                 for (int j = 0; j < cantidadCaminos; j++) {
-                    System.out.println("A que Sala lleva el camino: " + (j + 1)+ "? (De 0 a " + (cantidadSalas - 1)+ ") "  );
+                    System.out.println("A que Sala lleva el camino: " + (j + 1) + "? (De 0 a " + (cantidadSalas - 1) + ") ");
                     int destino = scanner.nextInt();
                     sig[j] = nodosCreados[destino];
-                    
+
                     System.out.println("Cuantoas puntos gana el jugador por llegar  aesta sala?");
                     puntos[j] = scanner.nextInt();
                 }
                 nodosCreados[i].setSiguiente(sig);
                 nodosCreados[i].setPuntos(puntos);
-                
+
             }
         }
         System.out.println("Salas Conectadas!!");
-        
+
+        System.out.println("\nAnalizando el diseño del laberinto...");
+
+        boolean tieneSalida
+                = verificarSalidaDFS(nodosCreados[0], 7);
+
+        if (tieneSalida) {
+
+            System.out.println(
+                    "El mapa tiene una ruta válida hasta la salida"
+            );
+
+        } else {
+
+            System.out.println(
+                    "¡CUIDADO! Este mapa es una trampa mortal. ¡No hay forma de llegar a la salida!"
+            );
+            System.out.println("Vamos a jugarlo igual para ver cuánto aguantás");
+
+        }
+
         Nodo nActual = nodosCreados[0];
         Jugador jugarCrearMapa = new Jugador();
-        
-        
-                System.out.println("-------------------");
+
+        System.out.println("-------------------");
         System.out.println("Comienza el juegoo..");
 
         String ROJO = "\u001B[31m";
@@ -112,7 +130,7 @@ public class ParcialEda {
             if (nActual.getSala().isSalida()) {
                 System.out.println("LLegaste a la salida!!");
                 System.out.println("Puntaje final: " + jugarCrearMapa.getPuntaje());
-                    break;
+                break;
             }
 
             mostrarMensajeSala(nActual.getSala());
@@ -123,15 +141,14 @@ public class ParcialEda {
 
             nActual = mostrarOpcionesCreadorMapa(nActual, jugarCrearMapa);
         }
-        
-        
+
     }
-    
+
     public static Nodo mostrarOpcionesCreadorMapa(Nodo nActual, Jugador jugador) {
         Scanner scanner = new Scanner(System.in);
         boolean t = true;
         int num = 0;
-        
+
         while (t) {
             try {
                 System.out.println("1: avanzar");
@@ -140,29 +157,28 @@ public class ParcialEda {
                     System.out.println("3: agarrar objeto");
                 }
                 System.out.println("4: regresar a sala anterior");
-                
-                
+
                 num = scanner.nextInt();
-                if (num == 1 && num == 2) {
+                if (num == 1 || num == 2) {
                     t = false;
-                }    
+                }
             } catch (Exception e) {
                 System.out.println("Prfa ingrtesa un numero");
                 scanner.nextLine();
             }
         }
-        
+
         switch (num) {
             case 1:
                 System.out.println("Cuartos Para Avanzar");
                 nActual.opcionesDeAvanzar();
                 System.out.println("Selecione un cuarto a avanzar(o no hacer nada 0)");
                 jugador.setnAnterior(nActual);
-                int avanzar = scanner.nextInt();         
+                int avanzar = scanner.nextInt();
                 nActual = nActual.avanzar(avanzar);
-                
+
                 break;
-                
+
             case 2:
                 if (jugador.getnAnterior() != null && jugador.isYaVolvioAtras() == false) {
                     System.out.println("Retrocendiendo");
@@ -177,7 +193,6 @@ public class ParcialEda {
         return nActual;
     }
 
-    
     public static void Jugar() {
         Reglas.reglas();
         Grafo grafo = new Grafo();
@@ -223,36 +238,16 @@ public class ParcialEda {
         grafo.agregarNodo(nSala6);
 
         grafo.mostrarGrafo();
-        
-        System.out.println("\nAnalizando el diseño del laberinto...");
-
-boolean tieneSalida =
-        verificarSalidaDFS(nInicio, 7);
-
-if (tieneSalida) {
-
-    System.out.println(
-        "El mapa tiene una ruta válida hasta la salida."
-    );
-
-} else {
-
-    System.out.println(
-        "¡CUIDADO! Este mapa es una trampa mortal. ¡No hay forma de llegar a la salida!"
-    );
-      System.out.println("Vamos a jugarlo igual para ver cuánto aguantás");
-        
-}
 
         Scanner scanner = new Scanner(System.in);
         Nodo nActual = nInicio;
         Stack<Nodo> pilaNodos = new Stack<>();
-        
+
         System.out.println("-------------------");
         System.out.println("Comienza el juegoo..");
 
         cargarTip();
-        
+
         String ROJO = "\u001B[31m";
         String RESET = "\u001B[0m";
 
@@ -283,7 +278,7 @@ if (tieneSalida) {
         Scanner scanner = new Scanner(System.in);
         boolean t = true;
         int num = 0;
-        
+
         while (t) {
             try {
                 System.out.println("1: avanzar");
@@ -292,32 +287,32 @@ if (tieneSalida) {
                     System.out.println("3: agarrar objeto");
                 }
                 System.out.println("4: regresar a sala anterior");
-                
+
                 if (nActual.getSala().isAnalizada() && jugador.getFosforo() != null) {
                     System.out.println("5: Prender Fosforo");
                 }
-                
+
                 num = scanner.nextInt();
                 if (num > 0 && num < 6) {
                     t = false;
-                }    
+                }
             } catch (Exception e) {
             }
         }
-        
+
         switch (num) {
             case 1:
                 System.out.println("Cuartos Para Avanzar");
                 nActual.opcionesDeAvanzar();
                 System.out.println("Selecione un cuarto a avanzar(o no hacer nada 0)");
-                
-                int avanzar = scanner.nextInt();            
+
+                int avanzar = scanner.nextInt();
                 if (avanzar != 0) {
                     pilaNodos.push(nActual);
                     jugador.setnAnterior(nActual);
                     nActual = nActual.avanzar(avanzar);
                 }
-                
+
                 if (nActual.getSala().getNumeroSala() == 3 && jugador.getFosforo() == null) {
                     System.out.println("Esta demasiado oscuro para entrar. Necesitas un fosforo.");
                     if (!pilaNodos.isEmpty()) {
@@ -325,12 +320,12 @@ if (tieneSalida) {
                     }
                 }
                 break;
-                
+
             case 2:
                 System.out.println("Analizando sala");
                 analizarSala(nActual, jugador, sala5, nCentral);
                 break;
-                
+
             case 3:
                 System.out.println("Agarrar el objeto de esta sala");
                 agarrarObjeto(nActual, jugador);
@@ -348,7 +343,7 @@ if (tieneSalida) {
                     System.out.println("Ya no puedes retroceder mas");
                 }
                 break;
-                
+
             case 5:
                 if (nActual.getSala().getNumeroSala() == 5) {
                     System.out.println("Prendiendo fósforo en el laboratorio...");
@@ -380,7 +375,7 @@ if (tieneSalida) {
             System.out.println(AZUL_OSCURO + "🔍 esta habitacion esta llena de cosas fascinantes, planetas de telgopor, pinturas, microscopios y una llave reluciente" + RESET);
             nActual.getSala().setAnalizada(true);
         }
-        
+
         if (nActual.getSala().getNumeroSala() == 3) {
             System.out.println(AZUL_OSCURO + "🔍 Prendo otro fosforo, veo una escalera áhi" + RESET);
             nActual.getSala().setAnalizada(true);
@@ -397,7 +392,7 @@ if (tieneSalida) {
                 nActual.getSala().setAnalizada(true);
             }
         }
-        
+
         if (nActual.getSala().getNumeroSala() == 0) {
             System.out.println(AZUL_OSCURO + "🔍 No veo nada especial en este cuarto" + RESET);
             nActual.getSala().setAnalizada(true);
@@ -475,7 +470,7 @@ if (tieneSalida) {
                 break;
         }
     }
-    
+
     public static void cargarTip() {
         int numero = (int) (Math.random() * 10) + 1;
         switch (numero) {
@@ -483,13 +478,13 @@ if (tieneSalida) {
                 System.out.println("Pista ALEATORIA A: Nesesitas algo para subir, podrias nesesitar una tirolina o una escalera");
                 break;
             case 2:
-                System.out.println("Pista ALEATORIA B: Una Lupa podria servir para ver entre tantas cosas");       
+                System.out.println("Pista ALEATORIA B: Una Lupa podria servir para ver entre tantas cosas");
                 break;
             case 3:
-                System.out.println("Pista ALEATORIA C: la oscuridad no permite que vea bien todos los cuartos");  
+                System.out.println("Pista ALEATORIA C: la oscuridad no permite que vea bien todos los cuartos");
                 break;
             case 4:
-                System.out.println("Pista ALEATORIA D: Ese cofree Dorado debe de tener algo importante  adentro para que lo hayan cerrado"); 
+                System.out.println("Pista ALEATORIA D: Ese cofree Dorado debe de tener algo importante  adentro para que lo hayan cerrado");
                 break;
             case 5:
                 System.out.println("Pista ALEATORIA E: Estas salas estan todas conectadas Pero que raro que entre ellas no haya una sala central");
@@ -502,7 +497,7 @@ if (tieneSalida) {
                 break;
             case 8:
                 System.out.println("Pista ALEATORIA H: Veo el Cartel del Mapa de la casa, las habitaciones son, 1,2,3,4,5,6,7 ");
-                break;    
+                break;
             case 9:
                 System.out.println("Pista ALEATORIA I: A veces para abrir algo primero debes encontrar aquello que lo mantiene cerrado.");
                 break;
@@ -511,47 +506,46 @@ if (tieneSalida) {
                 break;
         }
     }
-   
-     public static boolean verificarSalidaDFS(Nodo inicio, int totalSalas) {
-        // Este arreglo será nuestras "migas de pan". Empieza todo en false.
-        boolean[] visitados = new boolean[totalSalas]; 
-        return explorarGrafo(inicio, visitados);
-         
-    }
 
+    public static boolean verificarSalidaDFS(Nodo inicio, int totalSalas) {
+        // Este arreglo será nuestras "migas de pan". Empieza todo en false.
+        boolean[] visitados = new boolean[totalSalas];
+        return explorarGrafo(inicio, visitados);
+
+    }
 
     // El explorador recursivo
     private static boolean explorarGrafo(Nodo nActual, boolean[] visitados) {
-       
-        if (nActual == null) return false;
-        
+
+        if (nActual == null) {
+            return false;
+        }
+
         int idSala = nActual.getSala().getNumeroSala();
-        
-        
-        if (visitados[idSala]) return false;
-        
-        
+
+        if (visitados[idSala]) {
+            return false;
+        }
+
         visitados[idSala] = true;
-        
-        if (nActual.getSala().isSalida()) return true;
-        
-        
+
+        if (nActual.getSala().isSalida()) {
+            return true;
+        }
+
         Nodo[] siguientes = nActual.getSiguiente();
         if (siguientes != null) {
             for (int i = 0; i < siguientes.length; i++) {
                 Nodo nodoDestino = siguientes[i];
-                
-               
+
                 if (explorarGrafo(nodoDestino, visitados)) {
-                    return true; 
-                    
-                     
+                    return true;
+
                 }
             }
         }
-        
-        
+
         return false;
     }
-      
+
 }
